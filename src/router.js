@@ -19,6 +19,9 @@ import TetrisGame from './components/TetrisGame.vue';
 import SudokuGame from './components/SudokuGame.vue';
 import DamasGame from './components/DamasGame.vue';
 import FlappyBirdGame from './components/FlappyBirdGame.vue';
+import ReactionTimeGame from './components/ReactionTimeGame.vue';
+import TopoGame from './components/TopoGame.vue';
+import Juego2048Game from './components/2048Game.vue';
 
 const routes = [
   {
@@ -53,6 +56,12 @@ const routes = [
     path: '/flappy-bird',
     name: 'FlappyBirdGame',
     component: FlappyBirdGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/reaction-time',
+    name: 'ReactionTimeGame',
+    component: ReactionTimeGame,
     meta: { requiresAuth: true },
   },
   {
@@ -116,6 +125,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: '/topo',
+    name: 'TopoGame',
+    component: TopoGame,
+    meta: { requiresAuth: true },
+  },
+  {
     path: '/misPuntuaciones',
     name: 'MisPuntuaciones',
     component: MisPuntuaciones,
@@ -126,6 +141,13 @@ const routes = [
     name: 'PuntuacionesGlobales',
     component: PuntuacionesGlobales,
   },
+  {
+    path: '/2048',
+    name: 'Juego2048Game',
+    component: Juego2048Game,
+    meta: { requiresAuth: true },
+  }
+
 ];
 
 const router = createRouter({

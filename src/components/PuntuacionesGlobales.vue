@@ -38,7 +38,9 @@ import buscaminasImage from '../assets/buscaminas.webp';
 import tetrisImage from '../assets/tetris.avif';
 import SudokuImage from '../assets/sudoku.avif';
 import damasImage from '../assets/damas.png';
-import flappyBirdImage from '../assets/flappy-bird.svg';
+import flappyBirdImage from '../assets/flappy-bird.png';
+import reactionTimeImage from '../assets/reaction-time.svg';
+import topoImage from '../assets/topo.jpg';
 
 export default {
   name: 'PuntuacionesGlobales',
@@ -50,6 +52,7 @@ export default {
         'Sudoku': SudokuImage,
         'Damas': damasImage,
         'Flappy Bird': flappyBirdImage,
+        'Reaction Time': reactionTimeImage,
         'Tetris': tetrisImage,
         'Buscaminas': buscaminasImage,
         'Pong': pongImage,
@@ -60,6 +63,7 @@ export default {
         '3 en Raya': tresEnRaya,
         'Snake Game': snakeGameImage,
         'Adivina el Número': numberGuessingImage,
+        'Golpea al Topo': topoImage,
       },
     };
   },

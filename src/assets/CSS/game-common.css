@@ -7,6 +7,7 @@
 .memory-game,
 .tic-tac-toe,
 .number-game,
+.reaction-game,
 .sudoku-container {
   width: min(100%, 920px);
   min-height: min(72vh, 680px);
@@ -20,6 +21,7 @@
 .memory-game h1,
 .tic-tac-toe h1,
 .number-game h1,
+.reaction-game h1,
 .sudoku-container h1 {
   margin: 0 0 18px;
   font-size: clamp(1.8rem, 5vw, 2.4rem);

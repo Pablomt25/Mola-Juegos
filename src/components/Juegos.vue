@@ -33,7 +33,10 @@ import buscaminasImage from '../assets/buscaminas.webp';
 import tetrisImage from '../assets/tetris.avif';
 import SudokuGame from '../assets/sudoku.avif';
 import damasImage from '../assets/damas.png';
-import flappyBirdImage from '../assets/flappy-bird.svg';
+import flappyBirdImage from '../assets/flappy-bird.png';
+import reactionTimeImage from '../assets/reaction-time.svg';
+import topoImage from '../assets/topo.jpg';
+import juego2048Image from '../assets/juego2048.avif';
 
 export default {
   data() {
@@ -43,6 +46,7 @@ export default {
         { name: 'Sudoku', image: SudokuGame, link: '/sudoku' },
         { name: 'Damas', image: damasImage, link: '/damas' },
         { name: 'Flappy Bird', image: flappyBirdImage, link: '/flappy-bird' },
+        { name: 'Reaction Time', image: reactionTimeImage, link: '/reaction-time' },
         { name: 'Tetris', image: tetrisImage, link: '/tetris' },
         { name: 'Buscaminas', image: buscaminasImage, link: '/buscaminas' },
         { name: 'Pong', image: pongImage, link: '/pong' },
@@ -52,7 +56,9 @@ export default {
         { name: 'Juego de memoria', image: memoryGameImage, link: '/memoria' },
         { name: 'Tres en raya', image: tresEnRaya, link: '/tresenraya' },
         { name: 'Juego de la serpiente', image: snakeGameImage, link: '/serpiente' },
-        { name: 'Adivinación de números', image: numberGuessingImage, link: '/adivinaNumero' }
+        { name: 'Adivinación de números', image: numberGuessingImage, link: '/adivinaNumero' },
+        { name: 'Topo', image: topoImage, link: '/topo' },
+        { name: 'Juego 2048', image: juego2048Image, link: '/2048' }
       ]
     };
   },
