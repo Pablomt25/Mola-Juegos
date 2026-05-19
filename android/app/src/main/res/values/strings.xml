@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mola Juegos</string>
+    <string name="title_activity_main">Mola Juegos</string>
+    <string name="package_name">com.pablomoreno.molajuegos</string>
+    <string name="custom_url_scheme">com.pablomoreno.molajuegos</string>
+</resources>

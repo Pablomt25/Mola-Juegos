@@ -1,0 +1,62 @@
+.guess-color-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 620px);
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 22px);
+  text-align: center;
+}
+
+.guess-color-game .color-box {
+  width: min(48vw, 200px);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: clamp(16px, 3vw, 20px);
+}
+
+.guess-color-game .color-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 14px);
+  width: min(100%, 400px);
+}
+
+.guess-color-game .option {
+  width: 100%;
+  aspect-ratio: 1;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.guess-color-game .lives,
+.guess-color-game .score,
+.guess-color-game .game-over,
+.guess-color-game .timer {
+  margin-top: 12px;
+  font-size: clamp(13px, 2vw, 16px);
+}
+
+.guess-color-game .game-over {
+  max-width: 100%;
+}
+
+.guess-color-game .aciertos {
+  margin-top: 16px;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+}
+
+.guess-color-game .game-over button {
+  padding: 8px 16px;
+}
+
+@media screen and (max-width: 420px) {
+  .guess-color-game .color-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 180px);
+  }
+}

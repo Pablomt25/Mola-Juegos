@@ -1,0 +1,86 @@
+.number-game {
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 24px);
+  text-align: center;
+}
+
+.number-game h1 {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  margin: 0 0 18px;
+}
+
+.number-game .numbers-grid {
+  display: grid;
+  gap: clamp(5px, 1.5vw, 8px);
+  margin-top: 20px;
+}
+
+.number-game .five-columns {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.number-game .ten-columns {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.number-game .numbers-grid button {
+  width: 100%;
+  min-width: 0;
+  min-height: clamp(38px, 7vw, 48px);
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.number-game span {
+  color: #2563eb;
+}
+
+.number-game button.disabled {
+  background-color: #537be7;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.number-game button:not(.disabled):hover {
+  background-color: #0056b3;
+}
+
+.number-game p {
+  font-size: clamp(15px, 2vw, 16px);
+}
+
+.number-game .hint-message {
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.number-game .game-over-message,
+.number-game .win-message {
+  font-size: clamp(20px, 4vw, 24px);
+  font-weight: bold;
+  color: #1f2933;
+}
+
+@media (max-width: 600px) {
+  .number-game .ten-columns {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 380px) {
+  .number-game .numbers-grid {
+    gap: 4px;
+  }
+
+  .number-game .numbers-grid button {
+    min-height: 34px;
+    padding: 5px;
+    font-size: 13px;
+  }
+}

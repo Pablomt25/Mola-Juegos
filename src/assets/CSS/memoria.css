@@ -1,0 +1,85 @@
+.memory-game {
+  width: min(100%, 620px);
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 22px);
+  text-align: center;
+}
+
+.memory-game .timer {
+  font-size: clamp(16px, 3vw, 20px);
+  margin-bottom: 20px;
+}
+
+.memory-game .board {
+  --card-size: clamp(68px, 18vw, 100px);
+  display: grid;
+  grid-template-columns: repeat(4, var(--card-size));
+  gap: clamp(8px, 2vw, 12px);
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.memory-game .card {
+  width: var(--card-size);
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.memory-game .card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.memory-game .card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-game .card-front,
+.memory-game .card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(16px, 4vw, 24px);
+}
+
+.memory-game .card-front {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.memory-game .card-back {
+  background-color: #fff;
+  border: 2px solid #2196f3;
+  color: #000;
+  transform: rotateY(180deg);
+}
+
+.memory-game .card.matched .card-back {
+  background-color: #537be7;
+  border-color: #537be7;
+  color: #fff;
+}
+
+.memory-game .game-over-message {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 520px) {
+  .memory-game .board {
+    --card-size: min(21vw, 86px);
+    gap: 7px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .memory-game .board {
+    --card-size: min(20vw, 70px);
+  }
+}

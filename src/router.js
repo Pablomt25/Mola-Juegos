@@ -1,0 +1,158 @@
+import { createRouter, createWebHistory } from 'vue-router';
+import { auth } from './firebase';
+
+import Inicio from './components/Inicio.vue';
+import Login from './components/Login.vue';
+import Juegos from './components/Juegos.vue';
+import BuscaminasGame from './components/BuscaminasGame.vue';
+import PongGame from './components/PongGame.vue';
+import ColorGame from './components/ColorGame.vue';
+import AhorcadoGame from './components/AhorcadoGame.vue';
+import PokemonGame from './components/PokemonGame.vue';
+import MemoriaGame from './components/MemoriaGame.vue';
+import TresEnRayaGama from './components/TresEnRayaGama.vue';
+import SerpienteGame from './components/SerpienteGame.vue';
+import AdivinaNumeroGame from './components/AdivinaNumeroGame.vue';
+import MisPuntuaciones from './components/MisPuntuaciones.vue';
+import PuntuacionesGlobales from './components/PuntuacionesGlobales.vue';
+import TetrisGame from './components/TetrisGame.vue';
+import SudokuGame from './components/SudokuGame.vue';
+import DamasGame from './components/DamasGame.vue';
+import FlappyBirdGame from './components/FlappyBirdGame.vue';
+
+const routes = [
+  {
+    path: '/',
+    name: 'Inicio',
+    component: Inicio,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    props: route => ({ redirect: route.query.redirect }),
+  },
+  {
+    path: '/juegos',
+    name: 'Juegos',
+    component: Juegos,
+  },
+  {
+    path: '/sudoku',
+    name: 'SudokuGame',
+    component: SudokuGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/damas',
+    name: 'DamasGame',
+    component: DamasGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/flappy-bird',
+    name: 'FlappyBirdGame',
+    component: FlappyBirdGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/tetris',
+    name: 'TetrisGame',
+    component: TetrisGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/buscaminas',
+    name: 'BuscaminasGame',
+    component: BuscaminasGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/pong',
+    name: 'PongGame',
+    component: PongGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/color',
+    name: 'ColorGame',
+    component: ColorGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/pokemon',
+    name: 'PokemonGame',
+    component: PokemonGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/ahorcado',
+    name: 'AhorcadoGame',
+    component: AhorcadoGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/memoria',
+    name: 'MemoriaGame',
+    component: MemoriaGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/tresenraya',
+    name: 'TresEnRayaGama',
+    component: TresEnRayaGama,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/serpiente',
+    name: 'SerpienteGame',
+    component: SerpienteGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/adivinaNumero',
+    name: 'AdivinaNumeroGame',
+    component: AdivinaNumeroGame,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/misPuntuaciones',
+    name: 'MisPuntuaciones',
+    component: MisPuntuaciones,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/puntuacionesGlobales',
+    name: 'PuntuacionesGlobales',
+    component: PuntuacionesGlobales,
+  },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = auth.currentUser;
+
+  if (requiresAuth && !isAuthenticated) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath },
+    });
+  } else {
+    next();
+  }
+});
+
+export default router;

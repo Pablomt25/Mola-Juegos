@@ -1,0 +1,22 @@
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBM66kfjeWzPOi_h_CDna_ehoyJenEOjRE",
+  authDomain: "proyectodampablo.firebaseapp.com",
+  projectId: "proyectodampablo",
+  storageBucket: "proyectodampablo.firebasestorage.app",
+  messagingSenderId: "187719158200",
+  appId: "1:187719158200:web:ccd7b61efb34a832d0674d",
+  measurementId: "G-F4J1CMNJG0"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
+
+export { auth, db };
+
+export const rankingRef = collection(db, 'ranking');
