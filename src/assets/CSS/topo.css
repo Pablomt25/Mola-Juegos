@@ -37,6 +37,11 @@
   transition: transform 0.1s ease;
 }
 
+.cell{
+  min-height: 20px;
+  height: 100%;
+}
+
 .mole-game .cell:active {
   transform: scale(0.95);
 }
@@ -51,14 +56,14 @@
   margin-top: 15px;
   padding: 10px 20px;
   border: none;
-  background: #16a34a;
+  background: #2563eb;
   color: white;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .mole-game button:hover {
-  background: #12833b;
+  background: #1d4ed8;
 }
 
 @media (max-width: 400px) {

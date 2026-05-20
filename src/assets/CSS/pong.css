@@ -17,6 +17,7 @@
   height: auto;
   aspect-ratio: 2 / 1;
   border: 2px solid #fff;
+  touch-action: none;
 }
 
 .pong-game .score {

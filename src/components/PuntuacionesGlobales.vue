@@ -41,6 +41,7 @@ import damasImage from '../assets/damas.png';
 import flappyBirdImage from '../assets/flappy-bird.png';
 import reactionTimeImage from '../assets/reaction-time.svg';
 import topoImage from '../assets/topo.jpg';
+import juego2048Image from '../assets/juego2048.avif';
 
 export default {
   name: 'PuntuacionesGlobales',
@@ -64,6 +65,7 @@ export default {
         'Snake Game': snakeGameImage,
         'Adivina el Número': numberGuessingImage,
         'Golpea al Topo': topoImage,
+        '2048': juego2048Image,
       },
     };
   },

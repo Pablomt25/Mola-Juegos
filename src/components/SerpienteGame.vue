@@ -8,6 +8,8 @@
       ref="snakeGame"
       tabindex="0"
       @keydown="handleKeyDown"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
     >
       <div
         v-for="(segment, index) in snake"
@@ -43,6 +45,8 @@ export default {
       direction: 'right',
       gameOver: false,
       interval: null,
+        touchStartX: 0,
+        touchStartY: 0,
     };
   },
   mounted() {
@@ -57,6 +61,39 @@ export default {
       clearInterval(this.interval);
       this.interval = setInterval(this.moveSnake, 100);
     },
+    handleTouchStart(e) {
+  const touch = e.touches[0];
+  this.touchStartX = touch.clientX;
+  this.touchStartY = touch.clientY;
+},
+
+handleTouchEnd(e) {
+  const touch = e.changedTouches[0];
+
+  const dx = touch.clientX - this.touchStartX;
+  const dy = touch.clientY - this.touchStartY;
+
+  if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
+
+  const opposite = {
+    up: 'down',
+    down: 'up',
+    left: 'right',
+    right: 'left',
+  };
+
+  let newDirection = this.direction;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    newDirection = dx > 0 ? 'right' : 'left';
+  } else {
+    newDirection = dy > 0 ? 'down' : 'up';
+  }
+
+  if (opposite[newDirection] !== this.direction) {
+    this.direction = newDirection;
+  }
+},
     async moveSnake() {
       if (this.gameOver) return;
 

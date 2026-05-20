@@ -4,11 +4,12 @@
 
     <div class="top-bar">
       <p>Puntuación: {{ score }}</p>
-      <p v-if="gameOver" class="game-over">¡Game Over!</p>
     </div>
+      <p v-if="gameOver" class="game-over" style="display: none;">¡Game Over!</p>
 
     <div
       class="grid"
+      ref="grid"
       @touchstart="handleTouchStart"
       @touchend="handleTouchEnd"
     >
@@ -26,7 +27,7 @@
       </div>
     </div>
 
-    <button @click="resetGame">Reiniciar</button>
+    <button v-if="gameOver" class="restart-button" @click="resetGame">Volver a jugar</button>
   </div>
 </template>
 
@@ -48,10 +49,20 @@ export default {
   mounted() {
     this.resetGame();
     window.addEventListener('keydown', this.handleKey);
+    // Evita que el gesto táctil desplace la página cuando se juega en móvil
+    this.$nextTick(() => {
+      if (this.$refs.grid) {
+        this._touchMoveHandler = (e) => { e.preventDefault(); };
+        this.$refs.grid.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
+      }
+    });
   },
 
   beforeUnmount() {
   window.removeEventListener('keydown', this.handleKey);
+  if (this.$refs && this.$refs.grid && this._touchMoveHandler) {
+    this.$refs.grid.removeEventListener('touchmove', this._touchMoveHandler, { passive: false });
+  }
 },
 
   methods: {
@@ -260,7 +271,7 @@ export default {
 
 <style scoped>
 .game-2048 {
-  width: min(100%, 500px);
+  width: min(100%, 540px);
   margin: 0 auto;
   text-align: center;
   padding: clamp(12px, 3vw, 24px);
@@ -294,11 +305,15 @@ export default {
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   background: #bbada0;
   border-radius: 10px;
   padding: 10px;
   margin-top: 12px;
+  /* Mantener el tablero cuadrado y escalable */
+  width: min(100%, 520px);
+  aspect-ratio: 1 / 1;
 }
 
 /* Celda individual — color e texto vienen del :style dinámico */
@@ -312,14 +327,16 @@ export default {
   font-size: clamp(16px, 4vw, 28px);
   transition: background 0.1s ease;
   /* sin background ni color fijos: se aplican dinámicamente */
+  width: 100%;
+  height: 100%;
 }
-
-button {
+/* botón reiniciar específico */
+.restart-button {
   margin-top: 16px;
   padding: 10px 28px;
   border: none;
-  background: #8f7a66;
-  color: #f9f6f2;
+  background: #007bff;
+  color: #ffffff;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
@@ -328,8 +345,8 @@ button {
   transition: background 0.15s ease;
 }
 
-button:hover {
-  background: #6d5d4e;
+.restart-button:hover {
+  background: #0056b3;
 }
 
 @keyframes fadeIn {

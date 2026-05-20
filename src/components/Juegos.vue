@@ -39,6 +39,9 @@ import topoImage from '../assets/topo.jpg';
 import juego2048Image from '../assets/juego2048.avif';
 
 export default {
+  mounted() {
+  logEvent(analytics, 'prueba_evento');
+},
   data() {
     return {
       sortOption: 'default',
@@ -49,16 +52,16 @@ export default {
         { name: 'Reaction Time', image: reactionTimeImage, link: '/reaction-time' },
         { name: 'Tetris', image: tetrisImage, link: '/tetris' },
         { name: 'Buscaminas', image: buscaminasImage, link: '/buscaminas' },
-        { name: 'Pong', image: pongImage, link: '/pong' },
+        { name: 'Juego 2048', image: juego2048Image, link: '/2048' },
+        { name: 'Adivinación de números', image: numberGuessingImage, link: '/adivinaNumero' },
+        { name: 'Juego de memoria', image: memoryGameImage, link: '/memoria' },
         { name: 'Adivina el color', image: guessTheColorImage, link: '/color' },
         { name: 'Adivina el Pokémon', image: guessPokemonImage, link: '/pokemon' },
-        { name: 'Ahorcado', image: hangmanImage, link: '/ahorcado' },
-        { name: 'Juego de memoria', image: memoryGameImage, link: '/memoria' },
+        { name: 'Golpea al topo', image: topoImage, link: '/topo' },
+        { name: 'Ahorcado', image: hangmanImage, link: '/ahorcado' },       
         { name: 'Tres en raya', image: tresEnRaya, link: '/tresenraya' },
-        { name: 'Juego de la serpiente', image: snakeGameImage, link: '/serpiente' },
-        { name: 'Adivinación de números', image: numberGuessingImage, link: '/adivinaNumero' },
-        { name: 'Topo', image: topoImage, link: '/topo' },
-        { name: 'Juego 2048', image: juego2048Image, link: '/2048' }
+        { name: 'Juego de la serpiente', image: snakeGameImage, link: '/serpiente' },       
+        { name: 'Pong', image: pongImage, link: '/pong' },
       ]
     };
   },
@@ -78,6 +81,8 @@ export default {
       this.sortOption = event.target.value;
     }
   }
+  
+  
 };
 </script>
 

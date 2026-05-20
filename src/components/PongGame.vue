@@ -47,12 +47,20 @@ export default {
   beforeUnmount() {
     this.stopGameLoop();
     this.canvas?.removeEventListener('mousemove', this.movePaddle);
+    this.canvas?.removeEventListener('touchmove', this.movePaddleTouch);
+    this.canvas?.removeEventListener('touchstart', this.movePaddleTouch);
   },
   methods: {
     startGame() {
       this.stopGameLoop();
       this.canvas.removeEventListener('mousemove', this.movePaddle);
+      this.canvas.removeEventListener('touchmove', this.movePaddleTouch);
+      this.canvas.removeEventListener('touchstart', this.movePaddleTouch);
+
       this.canvas.addEventListener('mousemove', this.movePaddle);
+      this.canvas.addEventListener('touchmove', this.movePaddleTouch, { passive: false });
+      this.canvas.addEventListener('touchstart', this.movePaddleTouch, { passive: false });
+
       this.gameTimer = setInterval(() => {
         this.gameTimeLeft--;
         if (this.gameTimeLeft <= 0) {
@@ -127,6 +135,18 @@ export default {
       const mouseY = event.clientY - rect.top - this.paddleHeight / 2;
       if (mouseY >= 0 && mouseY <= this.canvas.height - this.paddleHeight) {
         this.paddle1Y = mouseY;
+      }
+    },
+    movePaddleTouch(event) {
+      event.preventDefault();
+      const touch = event.touches[0];
+      if (!touch) return;
+      const rect = this.canvas.getBoundingClientRect();
+      // Escalar la posición táctil al tamaño interno del canvas
+      const scaleY = this.canvas.height / rect.height;
+      const touchY = (touch.clientY - rect.top) * scaleY - this.paddleHeight / 2;
+      if (touchY >= 0 && touchY <= this.canvas.height - this.paddleHeight) {
+        this.paddle1Y = touchY;
       }
     },
     movePaddle2() {

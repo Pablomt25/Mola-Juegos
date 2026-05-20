@@ -41,7 +41,7 @@ export default {
       gameOver: false,
       didWin: false,
       score: 20,
-      words: ['JAVASCRIPT', 'VUE', 'PHP', 'ANGULAR', 'REACT', 'LARAVEL', 'JAVA', 'PYTHON', 'SYMFONY'],
+      words: ['JAVASCRIPT', 'VUE', 'PHP', 'ANGULAR', 'REACT', 'LARAVEL', 'JAVA', 'PYTHON', 'SYMFONY', 'NODE', 'RUBY', 'C#', 'GO', 'SWIFT', 'KOTLIN', 'DART', 'FLUTTER', 'TYPESCRIPT',],
       userName: '',
     };
   },

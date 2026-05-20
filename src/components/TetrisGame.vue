@@ -18,6 +18,20 @@
         <canvas ref="nextCanvas" width="80" height="240"></canvas>
       </div>
     </div>
+    <!-- CONTROLES MÓVIL -->
+<div class="mobile-controls">
+  <button @click="moveLeft">⬅️</button>
+
+  <button @click="rotatePiece">🔄</button>
+
+  <button @click="moveRight">➡️</button>
+
+  <button @click="drop">⬇️</button>
+
+  <button @click="hardDrop">⚡</button>
+
+  <button @click="hold">🟪</button>
+</div>
 
     <p>🏆 Puntuación: {{ score }}</p>
     
@@ -120,6 +134,26 @@ export default {
 
       if (!this.gameOver) this.animationFrame = requestAnimationFrame((t) => this.update(t));
     },
+
+    moveLeft() {
+  if (this.gameOver) return;
+
+  this.piece.x--;
+
+  if (this.collide()) {
+    this.piece.x++;
+  }
+},
+
+moveRight() {
+  if (this.gameOver) return;
+
+  this.piece.x++;
+
+  if (this.collide()) {
+    this.piece.x--;
+  }
+},
 
     drop() {
       this.piece.y++;
@@ -315,6 +349,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  touch-action: manipulation;
+}
+
 .game-container{
   text-align:center;
   overflow-x:auto;
@@ -350,6 +388,76 @@ canvas{
 
   .side h3 {
     font-size: 14px;
+  }
+}
+/* CONTROLES MÓVIL */
+
+.mobile-controls {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .layout {
+    transform: scale(0.82);
+    transform-origin: top center;
+    margin-bottom: -30px;
+  }
+
+  .mobile-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .mobile-controls button {
+    width: 70px;
+    height: 55px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+    -webkit-tap-highlight-color: transparent;
+touch-action: manipulation;
+user-select: none;
+-webkit-user-select: none;
+  }
+
+  .mobile-controls button:active {
+    transform: scale(0.92);
+    background: #1d4ed8;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .layout {
+    transform: scale(0.72);
+    margin-bottom: -55px;
+  }
+
+  .mobile-controls {
+    grid-template-columns: repeat(3, 60px);
+    gap: 8px;
+  }
+
+  .mobile-controls button {
+    width: 60px;
+    height: 50px;
+    font-size: 20px;
   }
 }
 </style>
