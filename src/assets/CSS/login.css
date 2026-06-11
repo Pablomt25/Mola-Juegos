@@ -4,10 +4,12 @@
   gap: 10px;
   width: min(100%, 450px);
   margin: clamp(12px, 4vw, 36px) auto;
-  background-color: #fff;
+  background: linear-gradient(145deg, #161b22, #0d1117);
   padding: clamp(18px, 4vw, 30px);
   border-radius: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  border: 1px solid #2a3a50;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  font-family: 'Inter', sans-serif;
 }
 
 .form *,
@@ -20,17 +22,18 @@
 }
 
 .flex-column > label {
-  color: #151717;
+  color: #c9d1d9;
   font-weight: 600;
 }
 
 .inputForm {
-  border: 1.5px solid #ecedec;
+  border: 1.5px solid #2a3a50;
   border-radius: 10px;
   min-height: 50px;
   display: flex;
   align-items: center;
   padding: 0 12px;
+  background: #0a0e17;
   transition: 0.2s ease-in-out;
 }
 
@@ -41,14 +44,21 @@
   width: 100%;
   height: 100%;
   font-size: 16px;
+  background: transparent;
+  color: #c9d1d9;
 }
 
 .input:focus {
   outline: none;
 }
 
+.input::placeholder {
+  color: #555;
+}
+
 .inputForm:focus-within {
-  border-color: #2d79f3;
+  border-color: #7ee8fa;
+  box-shadow: 0 0 8px rgba(126, 232, 250, 0.2);
 }
 
 .flex-row {
@@ -59,7 +69,7 @@
 
 .flex-row > div > label {
   font-size: 14px;
-  color: #000;
+  color: #8b949e;
   font-weight: 400;
 }
 
@@ -67,31 +77,40 @@
   display: inline-block;
   font-size: 14px;
   margin-left: 5px;
-  color: #2d79f3;
+  color: #7ee8fa;
   font-weight: 500;
   cursor: pointer;
+}
+
+.span:hover {
+  text-decoration: underline;
 }
 
 .button-submit {
   margin: 20px 0 10px;
-  background-color: #151717;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
   border: none;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 500;
+  color: #0a0e17;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   border-radius: 10px;
   min-height: 50px;
   width: 100%;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .button-submit:hover {
-  background-color: #252727;
+  background: linear-gradient(135deg, #5cc8e0, #3ab8d0);
+  box-shadow: 0 0 15px rgba(126, 232, 250, 0.5);
 }
 
 .p {
   text-align: center;
-  color: #000;
+  color: #c9d1d9;
   font-size: 14px;
   margin: 5px 0;
 }
@@ -105,40 +124,42 @@
   align-items: center;
   font-weight: 500;
   gap: 10px;
-  border: 1px solid #ededef;
-  background-color: #fff;
+  border: 1px solid #2a3a50;
+  background-color: #1a2738;
+  color: #c9d1d9;
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
 
 .btn:hover {
-  border-color: #ec7979;
+  border-color: #7ee8fa;
+  background-color: #243447;
 }
 
 .error {
-  color: red;
+  color: #f87171;
   margin-bottom: 10px;
   overflow-wrap: anywhere;
 }
 
 .btn.google,
 .btn.facebook {
-  background-color: #fff;
-  border: 1px solid #ededef;
-  color: #000;
+  background-color: #1a2738;
+  border: 1px solid #2a3a50;
+  color: #c9d1d9;
   transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .btn.google span,
 .btn.facebook span {
-  color: #000;
+  color: #c9d1d9;
 }
 
 .btn.google:hover,
 .btn.facebook:hover {
-  background-color: #f0f0f0;
-  border-color: #bdbdbd;
-  color: #000;
+  background-color: #243447;
+  border-color: #7ee8fa;
+  color: #e6edf3;
 }
 
 @media screen and (max-width: 420px) {

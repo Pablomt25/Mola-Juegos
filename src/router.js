@@ -51,7 +51,7 @@ const routes = [
     path: '/damas',
     name: 'DamasGame',
     component: DamasGame,
-    meta: { requiresAuth: true, gameId: 'damas', gameName: 'Damas' },
+    meta: { requiresAuth: true, gameId: 'damas', gameName: 'Damas', multiplayer: true },
   },
   {
     path: '/flappy-bird',
@@ -111,7 +111,7 @@ const routes = [
     path: '/tresenraya',
     name: 'TresEnRayaGama',
     component: TresEnRayaGama,
-    meta: { requiresAuth: true, gameId: 'tres_en_raya', gameName: '3 en Raya' },
+    meta: { requiresAuth: true, gameId: 'tres_en_raya', gameName: '3 en Raya', multiplayer: true },
   },
   {
     path: '/serpiente',

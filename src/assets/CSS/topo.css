@@ -14,6 +14,7 @@
 .mole-game .time {
   font-size: 18px;
   font-weight: bold;
+  color: #c9d1d9;
 }
 
 .mole-game .grid {
@@ -26,7 +27,8 @@
 .mole-game .cell {
   width: 100%;
   aspect-ratio: 1;
-  background: #007bff;
+  background: #1a2738;
+  border: 2px solid #2a3a50;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -34,36 +36,26 @@
   font-size: clamp(28px, 6vw, 40px);
   cursor: pointer;
   user-select: none;
-  transition: transform 0.1s ease;
-}
-
-.cell{
-  min-height: 20px;
-  height: 100%;
+  transition: all 0.15s ease;
 }
 
 .mole-game .cell:active {
   transform: scale(0.95);
 }
 
-.mole-game .game-over {
-  font-size: 22px;
-  font-weight: bold;
+.cell {
+  min-height: 20px;
+  height: 100%;
+}
+
+.mole-game .game-over-message {
   margin-top: 20px;
+  font-size: 18px;
 }
 
-.mole-game button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border: none;
-  background: #2563eb;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.mole-game button:hover {
-  background: #1d4ed8;
+.mole-game .game-over-message p {
+  margin: 0 0 10px;
+  color: #c9d1d9;
 }
 
 @media (max-width: 400px) {

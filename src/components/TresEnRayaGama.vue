@@ -215,32 +215,6 @@ export default {
 <style scoped>
 .tic-tac-toe {
   text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.difficulty-buttons {
-  margin-bottom: 20px;
-}
-
-.difficulty-buttons button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  background-color: #2196f3;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.difficulty-buttons button:hover {
-  background-color: #1d4ed8;
-  color: #fff;
-}
-
-.difficulty-buttons button.selected {
-  background-color: #0d61a5;
-  color: white;
 }
 
 .turn-indicator {
@@ -265,37 +239,25 @@ export default {
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  background-color: #ddd;
+  background-color: #1a2738;
+  color: #7ee8fa;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  font-weight: 700;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s;
+  border: 1px solid #2a3a50;
+  transition: all 0.3s;
 }
 
 .cell:hover {
-  background-color: #ccc;
+  background-color: #243447;
 }
 
 .game-over-message {
   margin-top: 20px;
-}
-
-.game-over-message button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #2563eb;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.game-over-message button:hover {
-  background-color: #1d4ed8;
 }
 
 @media screen and (max-width: 480px) {

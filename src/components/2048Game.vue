@@ -5,7 +5,7 @@
     <div class="top-bar">
       <p>Puntuación: {{ score }}</p>
     </div>
-      <p v-if="gameOver" class="game-over" style="display: none;">¡Game Over!</p>
+      
 
     <div
       class="grid"
@@ -26,8 +26,10 @@
         <span v-if="cell">{{ cell }}</span>
       </div>
     </div>
-
-    <button v-if="gameOver" class="restart-button" @click="resetGame">Volver a jugar</button>
+    <div v-if="gameOver" class="game-over-message">
+      <p>Fin del juego. Puntos: {{ score }}</p>
+      <button @click="resetGame">Volver a jugar</button>
+    </div>
   </div>
 </template>
 
@@ -225,25 +227,25 @@ export default {
     // ✅ NUEVO: colores por valor (estilo 2048 original)
     cellColor(value) {
       const colors = {
-        0:    '#cdc1b4',
-        2:    '#eee4da',
-        4:    '#ede0c8',
-        8:    '#f2b179',
-        16:   '#f59563',
-        32:   '#f67c5f',
-        64:   '#f65e3b',
-        128:  '#edcf72',
-        256:  '#edcc61',
-        512:  '#edc850',
-        1024: '#edc53f',
-        2048: '#edc22e',
+        0:    '#1a2738',
+        2:    '#243447',
+        4:    '#2d3f54',
+        8:    '#3d5573',
+        16:   '#4a6889',
+        32:   '#5878a0',
+        64:   '#6688b5',
+        128:  '#f0c040',
+        256:  '#e6a817',
+        512:  '#d9960f',
+        1024: '#cc8808',
+        2048: '#f0c040',
       };
-      return colors[value] ?? '#3c3a32';
+      return colors[value] ?? '#2a3a50';
     },
 
-    // ✅ NUEVO: texto oscuro para valores bajos, claro para altos
     cellTextColor(value) {
-      return value <= 4 ? '#776e65' : '#f9f6f2';
+      if (value === 0) return '#2a3a50';
+      return value <= 64 ? '#c9d1d9' : '#0a0e17';
     },
 
     async saveScore() {
@@ -263,14 +265,14 @@ export default {
   margin: 0 auto;
   text-align: center;
   padding: clamp(12px, 3vw, 24px);
-  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .game-2048 h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
-  color: #776e65;
+  color: #7ee8fa;
   margin-bottom: 8px;
+  text-shadow: 0 0 15px rgba(126, 232, 250, 0.3);
 }
 
 .top-bar {
@@ -280,31 +282,29 @@ export default {
   padding: 10px 4px;
   font-weight: bold;
   font-size: 1.1rem;
-  color: #776e65;
+  color: #c9d1d9;
 }
 
 .game-over {
-  color: #f65e3b;
+  color: #f87171;
   font-size: 1.2rem;
   animation: fadeIn 0.3s ease;
 }
 
-/* Fondo del tablero */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
-  background: #bbada0;
+  background: #1a2738;
   border-radius: 10px;
   padding: 10px;
   margin-top: 12px;
-  /* Mantener el tablero cuadrado y escalable */
   width: min(100%, 520px);
   aspect-ratio: 1 / 1;
+  border: 2px solid #2a3a50;
 }
 
-/* Celda individual — color e texto vienen del :style dinámico */
 .cell {
   aspect-ratio: 1;
   border-radius: 6px;
@@ -314,27 +314,8 @@ export default {
   font-weight: 800;
   font-size: clamp(16px, 4vw, 28px);
   transition: background 0.1s ease;
-  /* sin background ni color fijos: se aplican dinámicamente */
   width: 100%;
   height: 100%;
-}
-/* botón reiniciar específico */
-.restart-button {
-  margin-top: 16px;
-  padding: 10px 28px;
-  border: none;
-  background: #007bff;
-  color: #ffffff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: background 0.15s ease;
-}
-
-.restart-button:hover {
-  background: #0056b3;
 }
 
 @keyframes fadeIn {

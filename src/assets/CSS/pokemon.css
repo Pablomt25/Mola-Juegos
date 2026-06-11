@@ -5,17 +5,13 @@
   width: min(100%, 600px);
   margin: 0 auto;
   padding: clamp(12px, 3vw, 20px);
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .pokemon-game .loading {
   font-size: clamp(1.2rem, 4vw, 1.5rem);
   font-weight: bold;
+  color: #c9d1d9;
 }
 
 .pokemon-game .image-container {
@@ -45,7 +41,7 @@
 .pokemon-game .letter {
   font-size: clamp(1.2rem, 5vw, 2rem);
   margin: 0 2px;
-  color: #444;
+  color: #c9d1d9;
 }
 
 .pokemon-game .alphabet-container {
@@ -65,26 +61,30 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s;
+  background: #1a2738;
+  color: #c9d1d9;
 }
 
 .pokemon-game .guessed-letter {
-  background-color: #537be7;
-  color: #fff;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0) !important;
+  color: #0a0e17 !important;
 }
 
 .pokemon-game .not-guessed-letter {
-  background-color: #007bff;
-  color: #fff;
+  background: #2563eb !important;
+  color: #fff !important;
 }
 
 .pokemon-game .alphabet-button:hover:enabled {
-  background-color: #0056b3;
+  background: #243447;
+  color: #7ee8fa;
 }
 
 .pokemon-game .lives-container {
   font-size: clamp(1rem, 2.4vw, 1.2rem);
   margin-bottom: 20px;
+  color: #c9d1d9;
 }
 
 .pokemon-game .game-over-container {
@@ -96,21 +96,6 @@
   font-size: clamp(1rem, 3vw, 1.5rem);
   margin-bottom: 10px;
   overflow-wrap: anywhere;
-}
-
-.pokemon-game .restart-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #2563eb;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.pokemon-game .restart-button:hover {
-  background-color: #1d4ed8;
 }
 
 @media screen and (max-width: 420px) {

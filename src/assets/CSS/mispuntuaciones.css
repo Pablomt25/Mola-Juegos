@@ -1,18 +1,21 @@
 .mis-puntuaciones {
   text-align: center;
-  font-family: "Roboto", sans-serif;
-  color: #333;
-  padding: clamp(12px, 3vw, 20px);
+  font-family: 'Inter', Arial, sans-serif;
+  color: #c9d1d9;
+  padding: clamp(16px, 3vw, 28px);
 }
 
 .mis-puntuaciones h1 {
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  margin: 0 0 20px;
+  font-family: 'Orbitron', sans-serif;
+  color: #f0c040;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  margin: 0 0 24px;
+  text-shadow: 0 0 15px rgba(240, 192, 64, 0.3);
 }
 
 .mis-puntuaciones .no-puntuaciones {
   font-size: clamp(1rem, 2vw, 1.2rem);
-  color: #777;
+  color: #8b949e;
 }
 
 .mis-puntuaciones .botones-filtro {
@@ -24,24 +27,35 @@
 }
 
 .mis-puntuaciones .botones-filtro button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: #1a2738;
+  color: #c9d1d9;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 16px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  max-width: 100%;
+  transition: all 0.3s;
+}
+
+.mis-puntuaciones .botones-filtro button:hover {
+  background: #243447;
+  color: #7ee8fa;
 }
 
 .mis-puntuaciones .botones-filtro button.activo {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+  color: #0a0e17;
+  box-shadow: 0 0 12px rgba(126, 232, 250, 0.4);
 }
 
 .mis-puntuaciones .puntuaciones-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 22px);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
   width: min(100%, 1200px);
   justify-items: stretch;
   margin: 20px auto 0;
@@ -50,17 +64,19 @@
 .mis-puntuaciones .puntuacion {
   display: flex;
   flex-direction: column;
-  background-color: #f9f9f9;
-  padding: 18px;
+  background: linear-gradient(145deg, #161b22, #0d1117);
+  padding: 16px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2a3a50;
   text-align: center;
   min-width: 0;
-  transition: transform 0.2s ease;
+  transition: all 0.3s;
 }
 
 .mis-puntuaciones .puntuacion:hover {
-  transform: translateY(-5px);
+  border-color: #7ee8fa;
+  box-shadow: 0 0 15px rgba(126, 232, 250, 0.15);
+  transform: translateY(-3px);
 }
 
 .mis-puntuaciones .juego-imagen {
@@ -68,34 +84,39 @@
   aspect-ratio: 4 / 3;
   max-height: 170px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-bottom: 10px;
 }
 
 .mis-puntuaciones .puntuacion-info {
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
   overflow-wrap: anywhere;
 }
 
-@media screen and (max-width: 1000px) {
-  .mis-puntuaciones .puntuaciones-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.mis-puntuaciones .puntuacion-info h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #f0c040;
+  margin: 0 0 6px;
 }
 
-@media screen and (max-width: 720px) {
-  .mis-puntuaciones .puntuaciones-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.mis-puntuaciones .puntuacion-info p {
+  color: #c9d1d9;
+  margin: 4px 0;
+}
+
+.mis-puntuaciones .puntuacion-info strong {
+  color: #7ee8fa;
+}
+
+.mis-puntuaciones .partidas-info {
+  color: #8b949e;
+  font-size: 13px;
 }
 
 @media screen and (max-width: 520px) {
   .mis-puntuaciones .botones-filtro {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .mis-puntuaciones .puntuaciones-grid {
-    grid-template-columns: 1fr;
   }
 }

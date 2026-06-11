@@ -1,9 +1,19 @@
 <template>
   <div class="game-shell checkers-game">
     <h1>Damas</h1>
+    <div class="difficulty-buttons">
+      <button v-for="level in difficulties" :key="level" @click="setDifficulty(level)"
+        :class="{ selected: difficulty === level }">
+        {{ level }}
+      </button>
+      <button @click="setDifficulty('2 Jugadores')" :class="{ selected: difficulty === '2 Jugadores' }">
+        2 Jugadores
+      </button>
+    </div>
 
     <div class="checkers-status">
-      <p>Turno: {{ currentPlayer === 'player' ? 'Jugador' : 'Máquina' }}</p>
+      <p v-if="difficulty === '2 Jugadores'">Turno: <strong :class="currentPlayer === PLAYER ? 'turn-player' : 'turn-computer'">{{ currentPlayer === PLAYER ? 'Blancas' : 'Negras' }}</strong></p>
+      <p v-else>Turno: {{ currentPlayer === PLAYER ? 'Jugador' : 'Máquina' }}</p>
       <p>Puntuación: {{ score }}</p>
       <p>Fichas: {{ playerPieces }} - {{ computerPieces }}</p>
     </div>
@@ -19,7 +29,7 @@
           selected: selectedPiece && selectedPiece.row === cell.row && selectedPiece.col === cell.col,
           target: isMoveTarget(cell.row, cell.col)
         }"
-        :disabled="gameOver || currentPlayer !== 'player' || !isPlayable(cell.row, cell.col)"
+        :disabled="gameOver || !canPlayCurrentPlayer || !isPlayable(cell.row, cell.col)"
         @click="handleCellClick(cell.row, cell.col)"
       >
         <span
@@ -57,6 +67,8 @@ export default {
       message: '',
       score: 0,
       savedScore: false,
+      difficulty: 'Fácil',
+      difficulties: ['Fácil', 'Medio', 'Difícil'],
     };
   },
   computed: {
@@ -71,11 +83,19 @@ export default {
     computerPieces() {
       return this.countPieces(COMPUTER);
     },
+    canPlayCurrentPlayer() {
+      if (this.difficulty === '2 Jugadores') return true;
+      return this.currentPlayer === PLAYER;
+    },
   },
   mounted() {
     this.resetGame();
   },
   methods: {
+    setDifficulty(level) {
+      this.difficulty = level;
+      this.resetGame();
+    },
     resetGame() {
       this.board = Array.from({ length: 8 }, () => Array(8).fill(null));
 
@@ -110,20 +130,24 @@ export default {
       return this.board.flat().filter(piece => piece?.player === player).length;
     },
     handleCellClick(row, col) {
+      if (this.gameOver) return;
+
+      if (this.difficulty !== '2 Jugadores' && this.currentPlayer !== PLAYER) return;
+
       const piece = this.board[row][col];
 
-      if (piece?.player === PLAYER) {
+      if (piece?.player === this.currentPlayer) {
         this.selectPiece(row, col);
         return;
       }
 
       const move = this.legalMoves.find(item => item.to.row === row && item.to.col === col);
       if (move) {
-        this.applyPlayerMove(move);
+        this.applyCurrentPlayerMove(move);
       }
     },
     selectPiece(row, col) {
-      const allMoves = this.getAllMoves(PLAYER);
+      const allMoves = this.getAllMoves(this.currentPlayer);
       const pieceMoves = allMoves.filter(move => move.from.row === row && move.from.col === col);
 
       if (pieceMoves.length === 0) return;
@@ -131,9 +155,10 @@ export default {
       this.selectedPiece = { row, col };
       this.legalMoves = pieceMoves;
     },
-    applyPlayerMove(move) {
+    applyCurrentPlayerMove(move) {
+      const isPlayer = this.currentPlayer === PLAYER;
       const captured = this.applyMove(move);
-      if (captured) this.score += 10;
+      if (captured && isPlayer) this.score += 10;
 
       const extraCaptures = captured ? this.getMovesForPiece(move.to.row, move.to.col, true) : [];
       if (extraCaptures.length > 0) {
@@ -149,10 +174,14 @@ export default {
     finishTurn() {
       if (this.checkGameOver()) return;
 
-      this.currentPlayer = COMPUTER;
-      window.setTimeout(() => {
-        this.makeComputerMove();
-      }, 450);
+      if (this.difficulty === '2 Jugadores') {
+        this.currentPlayer = this.currentPlayer === PLAYER ? COMPUTER : PLAYER;
+      } else {
+        this.currentPlayer = COMPUTER;
+        window.setTimeout(() => {
+          this.makeComputerMove();
+        }, 450);
+      }
     },
     makeComputerMove() {
       if (this.gameOver) return;
@@ -164,10 +193,17 @@ export default {
       }
 
       const captures = moves.filter(move => move.capture);
-      const candidates = captures.length ? captures : moves;
-      let move = candidates[Math.floor(Math.random() * candidates.length)];
-      let captured = this.applyMove(move);
+      let depth = this.difficulty === 'Fácil' ? 0 : this.difficulty === 'Medio' ? 2 : 4;
+      let move;
 
+      if (depth === 0) {
+        const candidates = captures.length ? captures : moves;
+        move = candidates[Math.floor(Math.random() * candidates.length)];
+      } else {
+        move = this.bestMove(moves, depth);
+      }
+
+      let captured = this.applyMove(move);
       while (captured) {
         const extraCaptures = this.getMovesForPiece(move.to.row, move.to.col, true);
         if (extraCaptures.length === 0) break;
@@ -177,6 +213,79 @@ export default {
 
       if (this.checkGameOver()) return;
       this.currentPlayer = PLAYER;
+    },
+    bestMove(moves, depth) {
+      let bestScore = -Infinity;
+      let bestMove = moves[0];
+
+      for (const move of moves) {
+        const savedBoard = this.board.map(row => row.map(cell => cell ? { ...cell } : null));
+        this.applyMove(move);
+
+        let extraCaptures = move.capture ? this.getMovesForPiece(move.to.row, move.to.col, true) : [];
+        while (extraCaptures.length > 0) {
+          const em = extraCaptures[0];
+          this.applyMove(em);
+          extraCaptures = this.getMovesForPiece(em.to.row, em.to.col, true);
+        }
+
+        const score = depth > 0 ? this.minimax(depth - 1, false) : this.evaluateBoard();
+        this.board = savedBoard;
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = move;
+        }
+      }
+
+      return bestMove;
+    },
+    minimax(depth, isMaximizing, alpha = -Infinity, beta = Infinity) {
+      if (depth === 0) return this.evaluateBoard();
+
+      const player = isMaximizing ? COMPUTER : PLAYER;
+      const moves = this.getAllMoves(player);
+
+      if (moves.length === 0) return isMaximizing ? -1000 : 1000;
+
+      if (isMaximizing) {
+        let maxEval = -Infinity;
+        for (const move of moves) {
+          const savedBoard = this.board.map(row => row.map(cell => cell ? { ...cell } : null));
+          this.applyMove(move);
+          const eval_ = this.minimax(depth - 1, false, alpha, beta);
+          this.board = savedBoard;
+          maxEval = Math.max(maxEval, eval_);
+          alpha = Math.max(alpha, eval_);
+          if (beta <= alpha) break;
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (const move of moves) {
+          const savedBoard = this.board.map(row => row.map(cell => cell ? { ...cell } : null));
+          this.applyMove(move);
+          const eval_ = this.minimax(depth - 1, true, alpha, beta);
+          this.board = savedBoard;
+          minEval = Math.min(minEval, eval_);
+          beta = Math.min(beta, eval_);
+          if (beta <= alpha) break;
+        }
+        return minEval;
+      }
+    },
+    evaluateBoard() {
+      let score = 0;
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const piece = this.board[row][col];
+          if (!piece) continue;
+          const value = piece.king ? 5 : 1;
+          if (piece.player === COMPUTER) score += value;
+          else score -= value;
+        }
+      }
+      return score;
     },
     getAllMoves(player) {
       const moves = [];
@@ -248,12 +357,12 @@ export default {
         this.board[move.capture.row][move.capture.col] = null;
       }
 
-      if (
-        (piece.player === PLAYER && move.to.row === 0) ||
-        (piece.player === COMPUTER && move.to.row === 7)
-      ) {
+      if (piece.player === PLAYER && move.to.row === 0) {
         piece.king = true;
-        if (piece.player === PLAYER) this.score += 5;
+        if (this.difficulty !== '2 Jugadores') this.score += 5;
+      }
+      if (piece.player === COMPUTER && move.to.row === 7) {
+        piece.king = true;
       }
 
       return Boolean(move.capture);
@@ -290,11 +399,19 @@ export default {
       this.selectedPiece = null;
       this.legalMoves = [];
 
-      const finalScore = playerWon ? this.score + 50 + this.playerPieces * 5 : 0;
+      let finalScore;
+      if (this.difficulty === '2 Jugadores') {
+        finalScore = playerWon ? 15 : 0;
+        this.message = playerWon
+          ? 'Blancas ganan!'
+          : 'Negras ganan!';
+      } else {
+        finalScore = playerWon ? this.score + 50 + this.playerPieces * 5 : 0;
+        this.message = playerWon
+          ? `Has ganado. Puntos: ${finalScore}`
+          : 'Has perdido. Puntos: 0';
+      }
       this.score = finalScore;
-      this.message = playerWon
-        ? `Has ganado. Puntos: ${finalScore}`
-        : 'Has perdido. Puntos: 0';
 
       if (this.savedScore) return;
       this.savedScore = true;
@@ -309,6 +426,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import '../assets/CSS/damas.css';
+
+.turn-player {
+  color: #f0f4f8;
+}
+
+.turn-computer {
+  color: #7ee8fa;
+}
 </style>

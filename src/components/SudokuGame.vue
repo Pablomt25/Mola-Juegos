@@ -20,10 +20,10 @@
             blockBg: (Math.floor(y / 3) + Math.floor(x / 3)) % 2 === 0
           }"
           :style="{
-            borderTop: y % 3 === 0 ? '3px solid #444' : '1px solid #888',
-            borderLeft: x % 3 === 0 ? '3px solid #444' : '1px solid #888',
-            borderBottom: (y + 1) % 3 === 0 ? '3px solid #444' : '1px solid #888',
-            borderRight: (x + 1) % 3 === 0 ? '3px solid #444' : '1px solid #888'
+            borderTop: y % 3 === 0 ? '3px solid #7ee8fa' : '1px solid #2a3a50',
+            borderLeft: x % 3 === 0 ? '3px solid #7ee8fa' : '1px solid #2a3a50',
+            borderBottom: (y + 1) % 3 === 0 ? '3px solid #7ee8fa' : '1px solid #2a3a50',
+            borderRight: (x + 1) % 3 === 0 ? '3px solid #7ee8fa' : '1px solid #2a3a50'
           }"
         />
       </div>
@@ -33,7 +33,7 @@
       <p>Completado. Puntos: {{ score }}</p>
       <button @click="newGame">Volver a jugar</button>
     </div>
-    <div v-else class="controls">
+    <div v-else class="controls" style="margin-top: 18px;">
       <button @click="newGame">Nuevo juego</button>
     </div>
   </div>
@@ -155,8 +155,10 @@ export default {
 .grid {
   display: inline-block;
   max-width: 100%;
-  border: 3px solid #444;
-  background: #fff;
+  border: 3px solid #7ee8fa;
+  background: #0d1117;
+  border-radius: 4px;
+  margin-top: 18px;
 }
 
 .row {
@@ -169,18 +171,23 @@ input {
   text-align: center;
   font-size: clamp(1rem, 4vw, 1.5rem);
   outline: none;
+  background: #0d1117;
+  color: #c9d1d9;
+  caret-color: #7ee8fa;
 }
 
 input.fixed {
-  background: #ddd;
+  background: #1a2738;
+  color: #7ee8fa;
   font-weight: bold;
 }
 
 input.error {
-  background: #fdd;
+  background: rgba(220, 38, 38, 0.2);
+  color: #f87171;
 }
 
 input.blockBg:not(.fixed):not(.error) {
-  background: #f8f8f8;
+  background: #141e2d;
 }
 </style>

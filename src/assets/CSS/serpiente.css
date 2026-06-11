@@ -3,10 +3,7 @@
   flex-direction: column;
   align-items: center;
   touch-action: none;
-
 }
-
-
 
 .cuadrado {
   position: relative;
@@ -15,17 +12,18 @@
   max-width: min(100%, 300px);
   max-height: min(100vw, 300px);
   margin: 10px auto 12px;
-  border: 2px solid #1f2933;
-  background-color: #84b984;
+  border: 2px solid #2a3a50;
+  background-color: #1a2738;
   outline: none;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 4px;
 }
 
 .cuadrado:focus {
-  box-shadow: 0 0 0 3px rgba(75, 150, 237, 0.35);
+  box-shadow: 0 0 0 3px rgba(126, 232, 250, 0.35);
 }
 
 .snake-segment,
@@ -36,11 +34,11 @@
 }
 
 .snake-segment {
-  background: #0f7a2f;
+  background: #3fb950;
 }
 
 .snake-food {
-  background: #dc2626;
+  background: #f87171;
 }
 
 @media (max-width: 360px) {

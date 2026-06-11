@@ -360,7 +360,7 @@ export default {
           GROUND_HEIGHT -
           bottomY;
 
-        ctx.fillStyle = '#2563eb';
+        ctx.fillStyle = '#0d419d';
 
         ctx.fillRect(
           pipe.x,
@@ -376,7 +376,7 @@ export default {
           bottomHeight
         );
 
-        ctx.fillStyle = '#1d4ed8';
+        ctx.fillStyle = '#1a2738';
 
         ctx.fillRect(
           pipe.x - 5,

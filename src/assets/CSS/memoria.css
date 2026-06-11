@@ -8,6 +8,7 @@
 .memory-game .timer {
   font-size: clamp(16px, 3vw, 20px);
   margin-bottom: 20px;
+  color: #c9d1d9;
 }
 
 .memory-game .board {
@@ -47,24 +48,27 @@
   justify-content: center;
   align-items: center;
   font-size: clamp(16px, 4vw, 24px);
+  border-radius: 8px;
 }
 
 .memory-game .card-front {
-  background-color: #007bff;
-  color: #fff;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+  color: #0a0e17;
+  font-weight: 700;
 }
 
 .memory-game .card-back {
-  background-color: #fff;
-  border: 2px solid #2196f3;
-  color: #000;
+  background: #1a2738;
+  border: 2px solid #2a3a50;
+  color: #f0c040;
   transform: rotateY(180deg);
 }
 
 .memory-game .card.matched .card-back {
-  background-color: #537be7;
-  border-color: #537be7;
-  color: #fff;
+  background: #0d1117;
+  border-color: #f0c040;
+  color: #f0c040;
+  box-shadow: 0 0 10px rgba(240, 192, 64, 0.3);
 }
 
 .memory-game .game-over-message {

@@ -368,8 +368,9 @@ moveRight() {
 }
 
 canvas{
-  background:#111;
-  border:3px solid #444;
+  background:#0d1117;
+  border:3px solid #2a3a50;
+  border-radius:4px;
 }
 
 @media (max-width: 520px) {
@@ -383,7 +384,6 @@ canvas{
     font-size: 14px;
   }
 }
-/* CONTROLES MÓVIL */
 
 .mobile-controls {
   display: none;
@@ -411,27 +411,27 @@ canvas{
     width: 70px;
     height: 55px;
 
-    border: none;
+    border: 0;
     border-radius: 10px;
 
-    background: #2563eb;
-    color: white;
+    background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+    color: #0a0e17;
 
     font-size: 22px;
     font-weight: bold;
 
     cursor: pointer;
 
-    transition: 0.15s;
+    transition: all 0.3s;
     -webkit-tap-highlight-color: transparent;
-touch-action: manipulation;
-user-select: none;
--webkit-user-select: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .mobile-controls button:active {
     transform: scale(0.92);
-    background: #1d4ed8;
+    background: linear-gradient(135deg, #5cc8e0, #3ab8d0);
   }
 }
 

@@ -9,7 +9,9 @@
 .number-game,
 .reaction-game,
 .sudoku-container,
-.mole-game {
+.mole-game,
+.game-2048,
+.flappy-game {
   width: min(100%, 920px);
   min-height: min(72vh, 680px);
   margin: 0 auto;
@@ -24,7 +26,13 @@
 .number-game h1,
 .reaction-game h1,
 .sudoku-container h1,
-.mole-game h1 {
+.mole-game h1,
+.pong-game h1,
+.ahorcado-game h1,
+.pokemon-game h1,
+.guess-color-game h1,
+.game-2048 h1,
+.flappy-game h1 {
   margin: 0 0 18px;
   font-family: "Orbitron", sans-serif;
   font-size: clamp(1.8rem, 5vw, 2.4rem);
@@ -53,6 +61,21 @@
   border: 1px solid #2a3a50;
 }
 
+.game-over p,
+.game-over-message p,
+.game-over-container p,
+.game-panel p {
+  color: #c9d1d9;
+  font-size: clamp(15px, 2.2vw, 18px);
+  margin: 0 0 10px;
+}
+
+.game-over p strong,
+.game-over-message p strong,
+.game-over-container p strong {
+  color: #7ee8fa;
+}
+
 .game-over button,
 .game-over-message button,
 .game-over-container button,
@@ -62,7 +85,12 @@
 .tic-tac-toe button,
 .number-game > button,
 .sudoku-container button,
-.mole-game button {
+.mole-game button,
+.pong-game button,
+.ahorcado-game button,
+.pokemon-game button,
+.game-2048 button,
+.flappy-game button {
   border: 0;
   border-radius: 6px;
   background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
@@ -87,7 +115,12 @@
 .tic-tac-toe button:hover,
 .number-game > button:hover,
 .sudoku-container button:hover,
-.mole-game button:hover {
+.mole-game button:hover,
+.pong-game button:hover,
+.ahorcado-game button:hover,
+.pokemon-game button:hover,
+.game-2048 button:hover,
+.flappy-game button:hover {
   background: linear-gradient(135deg, #5cc8e0, #3ab8d0);
   box-shadow: 0 0 15px rgba(126, 232, 250, 0.5);
 }
@@ -104,8 +137,8 @@
 
 .difficulty-buttons button.selected,
 .difficulty-buttons button.activo {
-  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
-  color: #0a0e17;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0) !important;
+  color: #0a0e17 !important;
   box-shadow: 0 0 12px rgba(126, 232, 250, 0.4);
 }
 
@@ -120,7 +153,9 @@
   .tic-tac-toe,
   .number-game,
   .sudoku-container,
-  .mole-game {
+  .mole-game,
+  .game-2048,
+  .flappy-game {
     min-height: auto;
     padding: 12px 0 20px;
   }

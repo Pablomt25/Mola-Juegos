@@ -16,11 +16,10 @@
       </div>
     </div>
 
-    <p v-if="gameOver" class="game-over">
-      ¡Juego terminado! Puntuación: {{ score }}
-    </p>
-
-    <button v-if="gameOver" @click="resetGame">Jugar otra vez</button>
+    <div v-if="gameOver" class="game-over-message">
+      <p>¡Juego terminado! Puntuación: {{ score }}</p>
+      <button @click="resetGame">Volver a jugar</button>
+    </div>
   </div>
 </template>
 

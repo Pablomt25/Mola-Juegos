@@ -14,7 +14,7 @@
 
 .flappy-status p {
   margin: 0;
-  color: #1f2933;
+  color: #c9d1d9;
   font-weight: 700;
 }
 
@@ -23,20 +23,21 @@
   width: min(100%, 420px);
   height: auto;
   aspect-ratio: 3 / 4;
-  border: 4px solid #1f2933;
+  border: 4px solid #2a3a50;
   border-radius: 8px;
   background: #bfdbfe;
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
   outline: none;
   cursor: pointer;
 }
 
 .flappy-canvas:focus {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35), 0 12px 28px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 0 0 3px rgba(126, 232, 250, 0.35), 0 12px 28px rgba(0, 0, 0, 0.4);
 }
 
 .flappy-game .game-panel {
-  background: rgba(15, 23, 42, 0.86);
+  background: rgba(13, 17, 23, 0.95);
+  border: 1px solid #2a3a50;
 }
 
 @media (max-width: 480px) {

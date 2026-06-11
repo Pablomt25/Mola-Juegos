@@ -31,40 +31,40 @@
   padding: 8px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+  background: #1a2738;
+  color: #c9d1d9;
   cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.number-game .numbers-grid button:hover:not(.disabled) {
+  background: #243447;
+  color: #7ee8fa;
 }
 
 .number-game span {
-  color: #2563eb;
+  color: #7ee8fa;
 }
 
 .number-game button.disabled {
-  background-color: #537be7;
-  color: #fff;
+  background: #0d1117;
+  color: #2a3a50;
   cursor: not-allowed;
-}
-
-.number-game button:not(.disabled):hover {
-  background-color: #0056b3;
+  border: 1px solid #2a3a50;
 }
 
 .number-game p {
   font-size: clamp(15px, 2vw, 16px);
+  color: #c9d1d9;
 }
 
 .number-game .hint-message {
   font-size: clamp(18px, 3vw, 20px);
   font-weight: bold;
-  color: #2563eb;
-}
-
-.number-game .game-over-message,
-.number-game .win-message {
-  font-size: clamp(20px, 4vw, 24px);
-  font-weight: bold;
-  color: #1f2933;
+  color: #7ee8fa;
 }
 
 @media (max-width: 600px) {
@@ -81,6 +81,6 @@
   .number-game .numbers-grid button {
     min-height: 34px;
     padding: 5px;
-    font-size: 13px;
+    font-size: 11px;
   }
 }

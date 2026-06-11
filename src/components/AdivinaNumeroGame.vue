@@ -1,9 +1,15 @@
 <template>
   <div class="number-game">
     <h1>Adivina el Número entre 1 y 100</h1>
-    <p v-if="gameOver" class="game-over-message">¡El juego ha terminado! El número era: {{ numberToGuess }}</p>
-    <p v-else-if="guessedCorrectly" class="win-message"><span>¡Felicidades! Adivinaste el número {{ numberToGuess
-        }}.</span><br><br> Puntuación: {{ score }} puntos</p>
+    <div v-if="gameOver" class="game-over-message">
+      <p>¡El juego ha terminado! El número era: {{ numberToGuess }}</p>
+      <button @click="resetGame">Volver a jugar</button>
+    </div>
+    <div v-else-if="guessedCorrectly" class="game-over-message">
+      <p>¡Felicidades! Adivinaste el número {{ numberToGuess }}.</p>
+      <p>Puntuación: {{ score }} puntos</p>
+      <button @click="resetGame">Volver a jugar</button>
+    </div>
     <div v-else>
       <p v-if="message" class="hint-message">{{ message }}</p>
       <div class="numbers-grid" :class="{ 'five-columns': screenWidth <= 600, 'ten-columns': screenWidth > 600 }">
@@ -14,7 +20,6 @@
       </div>
       <p>Intentos: {{ attempts }}</p>
     </div>
-    <button v-if="gameOver || guessedCorrectly" @click="resetGame">Volver a Jugar</button>
   </div>
 </template>
 
