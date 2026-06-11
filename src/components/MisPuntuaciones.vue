@@ -1,7 +1,12 @@
 <template>
   <div class="mis-puntuaciones">
     <h1>Mis Puntuaciones</h1>
-    <div v-if="cargando" class="no-puntuaciones">Cargando puntuaciones...</div>
+    <div v-if="isAnonymous" class="no-puntuaciones guest-notice">
+      <i class="fas fa-user-secret"></i>
+      <p>Estás en modo invitado. Las puntuaciones no se guardan.</p>
+      <p>Cierra sesión e <router-link to="/login">inicia sesión con una cuenta</router-link> para guardar tus puntuaciones.</p>
+    </div>
+    <div v-else-if="cargando" class="no-puntuaciones">Cargando puntuaciones...</div>
     <div v-else-if="errorMessage" class="no-puntuaciones">{{ errorMessage }}</div>
     <div v-else-if="puntuaciones.length === 0" class="no-puntuaciones">No tienes puntuaciones aún.</div>
     <div v-else>
@@ -59,6 +64,7 @@ export default {
       puntuaciones: [],
       cargando: true,
       errorMessage: '',
+      isAnonymous: false,
       unsubscribeAuth: null,
       mostrarMejorPuntuacion: true,
       gameImages: {
@@ -84,8 +90,15 @@ export default {
   mounted() {
     this.unsubscribeAuth = onAuthStateChanged(auth, user => {
       if (user) {
-        this.getPuntuaciones(user);
+        this.isAnonymous = user.isAnonymous;
+        if (user.isAnonymous) {
+          this.puntuaciones = [];
+          this.cargando = false;
+        } else {
+          this.getPuntuaciones(user);
+        }
       } else {
+        this.isAnonymous = false;
         this.puntuaciones = [];
         this.cargando = false;
         this.errorMessage = 'Inicia sesión para ver tus puntuaciones.';

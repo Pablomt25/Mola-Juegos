@@ -14,7 +14,7 @@
           <li><router-link to="/misLogros" @click="closeNav">Mis logros</router-link></li>
           <li><router-link to="/puntuacionesGlobales" @click="closeNav">Puntuaciones globales</router-link></li>
           <li v-if="isLoggedIn">
-            <button @click="logout">Cerrar sesión</button>
+            <button @click="logout">{{ isAnonymous ? 'Salir (invitado)' : 'Cerrar sesión' }}</button>
           </li>
           <li v-else>
             <router-link to="/login" @click="closeNav">Iniciar sesión</router-link>
@@ -25,7 +25,7 @@
 
     <div class="content">
       <router-view />
-      <GameChat v-if="currentGameId" :gameId="currentGameId" :gameName="currentGameName" @sent-message="onChatMessage" />
+      <GameChat v-if="currentGameId && isLoggedIn && !isAnonymous" :gameId="currentGameId" :gameName="currentGameName" @sent-message="onChatMessage" />
     </div>
 
     <AchievementNotification ref="achievementNotif" />
@@ -47,7 +47,7 @@
             <li><router-link to="/misPuntuaciones" @click="closeNav">Mis puntuaciones</router-link></li>
             <li><router-link to="/misLogros" @click="closeNav">Mis logros</router-link></li>
             <li><router-link to="/puntuacionesGlobales" @click="closeNav">Puntuaciones Globales</router-link></li>
-            <li><router-link to="/login" @click="closeNav">Iniciar Sesión</router-link></li>
+            <li v-if="!isLoggedIn"><router-link to="/login" @click="closeNav">Iniciar Sesión</router-link></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -86,6 +86,7 @@ export default {
   components: { GameChat, AchievementNotification },
   setup() {
     const isLoggedIn = ref(false);
+    const isAnonymous = ref(false);
     const isNavOpen = ref(false);
     const router = useRouter();
     const route = useRoute();
@@ -96,12 +97,14 @@ export default {
 
     onAuthStateChanged(auth, (user) => {
       isLoggedIn.value = !!user;
+      isAnonymous.value = user ? user.isAnonymous : false;
     });
 
     const logout = async () => {
       try {
         await signOut(auth);
         isLoggedIn.value = false;
+        isAnonymous.value = false;
         router.push('/');
       } catch (error) {
         console.error('Error al cerrar sesión:', error);
@@ -137,7 +140,7 @@ export default {
       // cleanup handled by onEvent return
     });
 
-    return { isLoggedIn, isNavOpen, toggleNav, logout, closeNav, currentGameId, currentGameName, achievementNotif, onChatMessage };
+    return { isLoggedIn, isAnonymous, isNavOpen, toggleNav, logout, closeNav, currentGameId, currentGameName, achievementNotif, onChatMessage };
   },
 };
 </script>

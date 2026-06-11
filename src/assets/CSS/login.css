@@ -162,6 +162,29 @@
   color: #e6edf3;
 }
 
+.guest-btn {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #2a3a50;
+  background-color: #0d1117;
+  color: #8b949e;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.guest-btn:hover {
+  border-color: #7ee8fa;
+  color: #7ee8fa;
+  background-color: #1a2738;
+}
+
 @media screen and (max-width: 420px) {
   .form {
     border-radius: 14px;

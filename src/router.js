@@ -183,9 +183,9 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const isAuthenticated = auth.currentUser;
+  const user = auth.currentUser;
 
-  if (requiresAuth && !isAuthenticated) {
+  if (requiresAuth && !user) {
     next({
       path: '/login',
       query: { redirect: to.fullPath },

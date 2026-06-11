@@ -6,19 +6,22 @@
         <option value="default">Predeterminado</option>
         <option value="a-z">A-Z</option>
         <option value="z-a">Z-A</option>
-        <option value="favoritos">Favoritos</option>
+        <option v-if="isLoggedIn && !isAnonymous" value="favoritos">Favoritos</option>
         <option value="multijugador">Multijugador</option>
       </select>
     </div>
     <div v-if="sortOption === 'favoritos' && !isLoggedIn" class="login-hint">
       <router-link to="/login">Inicia sesión</router-link> para ver tus favoritos
     </div>
+    <div v-if="sortOption === 'favoritos' && isAnonymous" class="login-hint">
+      Modo invitado: los favoritos no están disponibles. <router-link to="/login">Inicia sesión</router-link> para guardar favoritos.
+    </div>
     <div class="content-custom">
       <div class="games-custom">
         <div v-for="game in sortedGames" :key="game.gameId" class="game-custom">
           <div class="game-img-wrapper">
             <img :src="game.image" :alt="game.name">
-            <FavoriteButton :gameId="game.gameId" @toggled="onFavToggled" @achievements="onAchievements" />
+            <FavoriteButton v-if="isLoggedIn && !isAnonymous" :gameId="game.gameId" @toggled="onFavToggled" @achievements="onAchievements" />
             <span v-if="game.multiplayer" class="multiplayer-badge"><i class="fas fa-users"></i> 2P</span>
           </div>
           <h2>{{ game.name }}</h2>
@@ -61,6 +64,7 @@ export default {
       sortOption: 'default',
       favorites: [],
       isLoggedIn: false,
+      isAnonymous: false,
       unsubscribeAuth: null,
       games: [
         { name: 'Sudoku', image: SudokuImage, link: '/sudoku', gameId: 'sudoku', multiplayer: false },
@@ -100,7 +104,8 @@ export default {
   created() {
     this.unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       this.isLoggedIn = !!user;
-      if (user) {
+      this.isAnonymous = user ? user.isAnonymous : false;
+      if (user && !user.isAnonymous) {
         try {
           this.favorites = await getUserFavorites();
         } catch (e) {

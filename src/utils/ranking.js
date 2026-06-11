@@ -54,6 +54,7 @@ export async function ensureUserDocument() {
 export async function saveGameScore(juego, puntos, extraContext) {
   const user = auth.currentUser;
   if (!user) return;
+  if (user.isAnonymous) return;
 
   const slug = gameSlug(juego);
   const docId = `${user.uid}_${slug}`;

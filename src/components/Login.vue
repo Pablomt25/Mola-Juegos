@@ -15,10 +15,17 @@
       <input type="email" class="input" v-model="email" placeholder="Introduce tu Email" required>
     </div>
 
-    <div class="flex-column">
+    <div v-if="!isRegister" class="flex-column">
       <label>Contraseña</label>
     </div>
-    <div class="inputForm">
+    <div v-if="!isRegister" class="inputForm">
+      <input type="password" class="input" v-model="password" placeholder="Introduce tu Contraseña" required>
+    </div>
+
+    <div v-if="isRegister" class="flex-column">
+      <label>Contraseña</label>
+    </div>
+    <div v-if="isRegister" class="inputForm">
       <input type="password" class="input" v-model="password" placeholder="Introduce tu Contraseña" required>
     </div>
 
@@ -32,7 +39,7 @@
     <p class="p line">O</p>
 
     <div class="flex-row">
-      <button class="btn google" style="color: black;" @click="signInWithGoogle">
+      <button type="button" class="btn google" @click="signInWithGoogle">
         <svg version="1.1" width="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
           x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
           <path style="fill:#FBBB00;" d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256
@@ -50,7 +57,7 @@
         </svg>
         <span class="button-text">Google</span>
       </button>
-      <button class="btn facebook" style="color: black;" @click="signInWithFacebook">
+      <button type="button" class="btn facebook" @click="signInWithFacebook">
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 48 48">
           <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
           <path fill="#fff"
@@ -60,11 +67,16 @@
         <span class="button-text">Facebook</span>
       </button>
     </div>
+
+    <button type="button" class="guest-btn" @click="signInAsGuest">
+      <i class="fas fa-user-secret"></i>
+      Entrar como invitado
+    </button>
   </form>
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signInAnonymously } from "firebase/auth";
 import { getFirestore, doc, setDoc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 
 export default {
@@ -169,6 +181,15 @@ export default {
             ultimaConexion: serverTimestamp(),
           });
         }
+        this.redirectToOriginalPage();
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
+    },
+    async signInAsGuest() {
+      const auth = getAuth();
+      try {
+        await signInAnonymously(auth);
         this.redirectToOriginalPage();
       } catch (error) {
         this.errorMessage = error.message;

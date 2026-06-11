@@ -3,6 +3,11 @@
     <h1>Mis Logros</h1>
     <div v-if="cargando" class="no-logros">Cargando logros...</div>
     <div v-else-if="!isLoggedIn" class="no-logros">Inicia sesión para ver tus logros.</div>
+    <div v-else-if="isAnonymous" class="no-logros guest-notice">
+      <i class="fas fa-user-secret"></i>
+      <p>Estás en modo invitado. Los logros no seDesbloquean.</p>
+      <p>Cierra sesión e <router-link to="/login">inicia sesión con una cuenta</router-link> para desbloquear logros.</p>
+    </div>
     <div v-else class="logros-grid">
       <div v-for="ach in allAchievements" :key="ach.id" class="logro-card" :class="{ unlocked: unlockedIds.includes(ach.id) }">
         <div class="logro-icon">
@@ -33,6 +38,7 @@ export default {
       allAchievements: getAchievementDefs(),
       unlockedMap: {},
       isLoggedIn: false,
+      isAnonymous: false,
       cargando: true,
       unsubscribeAuth: null,
     };
@@ -46,9 +52,15 @@ export default {
     this.unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
         this.isLoggedIn = true;
-        await this.loadAchievements();
+        this.isAnonymous = user.isAnonymous;
+        if (!user.isAnonymous) {
+          await this.loadAchievements();
+        } else {
+          this.unlockedMap = {};
+        }
       } else {
         this.isLoggedIn = false;
+        this.isAnonymous = false;
         this.unlockedMap = {};
       }
       this.cargando = false;
@@ -103,6 +115,35 @@ h1 {
   color: #8b949e;
   font-size: 16px;
   padding: 40px 0;
+}
+
+.guest-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 20px;
+}
+
+.guest-notice i {
+  font-size: 36px;
+  color: #7ee8fa;
+}
+
+.guest-notice p {
+  color: #c9d1d9;
+  margin: 0;
+  font-size: 15px;
+}
+
+.guest-notice a {
+  color: #7ee8fa;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.guest-notice a:hover {
+  text-decoration: underline;
 }
 
 .logros-grid {
