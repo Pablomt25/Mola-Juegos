@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   name: 'AhorcadoGame',
@@ -42,12 +41,10 @@ export default {
       didWin: false,
       score: 20,
       words: ['JAVASCRIPT', 'VUE', 'PHP', 'ANGULAR', 'REACT', 'LARAVEL', 'JAVA', 'PYTHON', 'SYMFONY', 'NODE', 'RUBY', 'C#', 'GO', 'SWIFT', 'KOTLIN', 'DART', 'FLUTTER', 'TYPESCRIPT',],
-      userName: '',
     };
   },
   mounted() {
     this.startGame();
-    this.getUserName();
   },
   methods: {
     startGame() {
@@ -89,26 +86,10 @@ export default {
       this.startGame();
     },
     async saveScore() {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: this.userName, 
-            puntos: this.score,
-            fecha: serverTimestamp(),
-            juego: 'Ahorcado'
-          });
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
-      }
-    },
-    getUserName() {
-      const user = auth.currentUser;
-      if (user) {
-        const atIndex = user.email.indexOf('@');
-        this.userName = atIndex !== -1 ? user.email.slice(0, atIndex) : 'Anónimo';
+      try {
+        await saveGameScore('Ahorcado', this.score);
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
     },
   },

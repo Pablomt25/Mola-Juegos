@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -248,19 +247,8 @@ export default {
     },
 
     async saveScore() {
-      const user = auth.currentUser;
-      if (!user) return;
-
       try {
-        const userName = user.email.split('@')[0];
-
-        await addDoc(collection(db, 'ranking'), {
-          userId: user.uid,
-          nombre: userName,
-          puntos: this.score,
-          fecha: serverTimestamp(),
-          juego: '2048',
-        });
+        await saveGameScore('2048', this.score);
       } catch (err) {
         console.error(err);
       }

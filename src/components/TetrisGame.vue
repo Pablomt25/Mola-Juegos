@@ -43,9 +43,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-
+import { saveGameScore } from '../utils/ranking';
 const COLS = 10;
 const ROWS = 20;
 const BLOCK = 20;
@@ -319,15 +317,10 @@ moveRight() {
 
     async endGame() {
       this.gameOver = true;
-      const user = auth.currentUser;
-      if(user){
-        await addDoc(collection(db,'ranking'),{
-          userId: user.uid,
-          nombre: user.email.split('@')[0],
-          puntos: this.score,
-          fecha: serverTimestamp(),
-          juego:'Tetris'
-        });
+      try {
+        await saveGameScore('Tetris', this.score);
+      } catch (error) {
+        console.error('Error al guardar puntuación:', error);
       }
     },
 

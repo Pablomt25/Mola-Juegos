@@ -19,9 +19,10 @@
           <div class="puntuacion-info">
             <h2>{{ puntuacion.juego }}</h2>
             <p v-if="mostrarMejorPuntuacion">
-              Mejor Puntuación en 1 Partida: <strong>{{ puntuacion.mejorPuntos }}</strong> puntos
+              Mejor Puntuación: <strong>{{ puntuacion.mejorPuntos }}</strong> puntos
             </p>
             <p v-else>Puntuaciones Totales: <strong>{{ puntuacion.totalPuntos }}</strong></p>
+            <p class="partidas-info">Partidas: {{ puntuacion.partidas }}</p>
           </div>
         </div>
       </div>
@@ -104,26 +105,16 @@ export default {
       try {
         const q = query(collection(db, 'ranking'), where('userId', '==', user.uid));
         const querySnapshot = await getDocs(q);
-        const puntuacionesMap = new Map();
 
-        querySnapshot.forEach(doc => {
+        this.puntuaciones = querySnapshot.docs.map(doc => {
           const data = doc.data();
-
-          if (!puntuacionesMap.has(data.juego)) {
-            puntuacionesMap.set(data.juego, {
-              juego: data.juego,
-              juegoImagen: this.gameImages[data.juego],
-              mejorPuntos: data.puntos,
-              totalPuntos: data.puntos,
-            });
-          } else {
-            const current = puntuacionesMap.get(data.juego);
-            current.mejorPuntos = Math.max(current.mejorPuntos, data.puntos);
-            current.totalPuntos += data.puntos;
-          }
+          return {
+            juego: data.juego,
+            mejorPuntos: data.puntos || 0,
+            totalPuntos: data.totalPuntos || 0,
+            partidas: data.partidas || 0,
+          };
         });
-
-        this.puntuaciones = Array.from(puntuacionesMap.values());
       } catch (error) {
         console.error('Error al cargar tus puntuaciones:', error);
         this.errorMessage = 'No se han podido cargar tus puntuaciones.';

@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -85,27 +84,11 @@ export default {
     },
 
     async saveScore() {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const userName = this.getUserName(user.email);
-
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: userName,
-            puntos: this.score,
-            fecha: serverTimestamp(),
-            juego: 'Golpea al Topo'
-          });
-        } catch (error) {
-          console.error("Error guardando score:", error);
-        }
+      try {
+        await saveGameScore('Golpea al Topo', this.score);
+      } catch (error) {
+        console.error("Error guardando score:", error);
       }
-    },
-
-    getUserName(email) {
-      const atIndex = email.indexOf('@');
-      return atIndex !== -1 ? email.slice(0, atIndex) : 'Anónimo';
     },
 
     resetGame() {

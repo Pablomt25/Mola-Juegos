@@ -1,5 +1,5 @@
 .sort-options {
-  font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 .filter-bar {
@@ -7,17 +7,20 @@
   align-items: center;
   gap: 12px;
   width: min(100%, 460px);
-  background-color: #f8f9fa1f;
+  background: linear-gradient(135deg, #161b22, #0d1117);
   padding: 15px 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid #2a3a50;
+  box-shadow: 0 0 20px rgba(126, 232, 250, 0.08);
   margin: 0 0 20px;
 }
 
 .filter-bar label {
-  font-size: clamp(16px, 2vw, 18px);
-  color: #333;
-  font-weight: bold;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #7ee8fa;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   white-space: nowrap;
 }
 
@@ -25,18 +28,20 @@
   min-width: 0;
   flex: 1;
   padding: 10px 15px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  border: 1px solid #2a3a50;
+  border-radius: 6px;
+  background-color: #0d1117;
+  color: #c9d1d9;
   transition: border-color 0.3s, box-shadow 0.3s;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  appearance: none;
+  cursor: pointer;
 }
 
-.filter-bar select:hover,
 .filter-bar select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #7ee8fa;
+  box-shadow: 0 0 8px rgba(126, 232, 250, 0.3);
   outline: none;
 }
 
@@ -59,16 +64,18 @@
   align-items: center;
   min-width: 0;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(145deg, #161b22, #0d1117);
   padding: clamp(14px, 2.5vw, 20px);
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  border: 1px solid #2a3a50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
 }
 
 .game-custom:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(126, 232, 250, 0.15);
+  border-color: #7ee8fa;
 }
 
 .game-custom img {
@@ -76,34 +83,40 @@
   aspect-ratio: 4 / 3;
   max-height: 210px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .game-custom h2 {
-  color: #333;
-  font-size: clamp(17px, 2vw, 20px);
+  color: #e6edf3;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(14px, 1.6vw, 18px);
   margin: 10px 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .game-custom button {
-  background-color: #007bff;
-  color: #fff;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+  color: #0a0e17;
   padding: 10px 20px;
   margin: auto 0 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  transition: background-color 0.3s;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s;
 }
 
 .game-custom button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #5cc8e0, #3ab8d0);
+  box-shadow: 0 0 15px rgba(126, 232, 250, 0.5);
 }
 
 .game-custom a {
-  color: #fff;
+  color: #0a0e17;
   text-decoration: none;
 }
 

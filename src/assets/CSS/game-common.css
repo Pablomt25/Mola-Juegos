@@ -8,7 +8,8 @@
 .tic-tac-toe,
 .number-game,
 .reaction-game,
-.sudoku-container {
+.sudoku-container,
+.mole-game {
   width: min(100%, 920px);
   min-height: min(72vh, 680px);
   margin: 0 auto;
@@ -22,16 +23,21 @@
 .tic-tac-toe h1,
 .number-game h1,
 .reaction-game h1,
-.sudoku-container h1 {
+.sudoku-container h1,
+.mole-game h1 {
   margin: 0 0 18px;
+  font-family: "Orbitron", sans-serif;
   font-size: clamp(1.8rem, 5vw, 2.4rem);
-  color: #1f2933;
+  color: #7ee8fa;
+  letter-spacing: 1px;
+  text-shadow: 0 0 15px rgba(126, 232, 250, 0.3);
 }
 
 .game-status,
 .game-container p,
 .game-shell p {
   font-size: clamp(15px, 2.2vw, 18px);
+  color: #c9d1d9;
 }
 
 .game-over,
@@ -42,8 +48,9 @@
   margin: 18px auto 0;
   padding: 14px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.82);
-  color: #fff;
+  background: rgba(13, 17, 23, 0.95);
+  color: #c9d1d9;
+  border: 1px solid #2a3a50;
 }
 
 .game-over button,
@@ -54,14 +61,21 @@
 .memory-game button,
 .tic-tac-toe button,
 .number-game > button,
-.sudoku-container button {
+.sudoku-container button,
+.mole-game button {
   border: 0;
   border-radius: 6px;
-  background: #2563eb;
-  color: #fff;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+  color: #0a0e17;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   min-height: 40px;
   padding: 9px 16px;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .game-over button:hover,
@@ -72,8 +86,10 @@
 .memory-game button:hover,
 .tic-tac-toe button:hover,
 .number-game > button:hover,
-.sudoku-container button:hover {
-  background: #1d4ed8;
+.sudoku-container button:hover,
+.mole-game button:hover {
+  background: linear-gradient(135deg, #5cc8e0, #3ab8d0);
+  box-shadow: 0 0 15px rgba(126, 232, 250, 0.5);
 }
 
 .difficulty-buttons,
@@ -88,8 +104,9 @@
 
 .difficulty-buttons button.selected,
 .difficulty-buttons button.activo {
-  background: #0f4f8f;
-  color: #fff;
+  background: linear-gradient(135deg, #7ee8fa, #5cc8e0);
+  color: #0a0e17;
+  box-shadow: 0 0 12px rgba(126, 232, 250, 0.4);
 }
 
 @media (max-width: 560px) {
@@ -102,7 +119,8 @@
   .memory-game,
   .tic-tac-toe,
   .number-game,
-  .sudoku-container {
+  .sudoku-container,
+  .mole-game {
     min-height: auto;
     padding: 12px 0 20px;
   }

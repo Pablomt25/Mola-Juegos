@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -53,7 +52,6 @@ export default {
   mounted() {
     this.shuffleCards();
     this.startTimer();
-    this.getUserName();
   },
   beforeUnmount() {
     clearInterval(this.timer);
@@ -123,26 +121,10 @@ export default {
       }, 1000);
     },
     async saveScore(points) {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: this.userName,
-            puntos: points,
-            fecha: serverTimestamp(),
-            juego: 'Juego de Memoria'
-          });
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
-      }
-    },
-    getUserName() {
-      const user = auth.currentUser;
-      if (user) {
-        const atIndex = user.email.indexOf('@');
-        this.userName = atIndex !== -1 ? user.email.slice(0, atIndex) : 'Anónimo';
+      try {
+        await saveGameScore('Juego de Memoria', points);
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
     },
   },

@@ -34,8 +34,7 @@
 
 <script>
 import axios from 'axios';
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -70,11 +69,6 @@ export default {
   },
   async mounted() {
     await this.fetchPokemon();
-    this.userEmail = auth.currentUser ? auth.currentUser.email : null;
-    if (this.userEmail) {
-      const atIndex = this.userEmail.indexOf('@');
-      this.userName = atIndex !== -1 ? this.userEmail.slice(0, atIndex) : this.userEmail;
-    }
   },
   methods: {
     async fetchPokemon() {
@@ -112,21 +106,10 @@ export default {
       }
     },
     async calculateScoreAndSave() {
-      const score = this.finalScore;
-
-      if (this.userEmail) {
-        try {
-          await addDoc(collection(db, 'ranking'), {
-            userId: auth.currentUser.uid,
-            nombre: this.userName,
-            puntos: score,
-            fecha: serverTimestamp(),
-            juego: 'Adivina el Pokémon'
-          });
-          console.log('Puntuación guardada correctamente en la base de datos.');
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
+      try {
+        await saveGameScore('Adivina el Pokémon', this.finalScore);
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
     },
     restartGame() {

@@ -2,7 +2,10 @@
   <div class="inicio-content">
     <div class="description">
       <h1>Bienvenido a nuestra página Molajuegos</h1>
-      <p>Aquí encontrarás una variedad de juegos sencillos como Adivina el Color, Pong, Adivina el Pokémon, Ahorcado y muchos más.</p>
+      <p>
+        Aquí encontrarás una variedad de juegos sencillos como Adivina el Color,
+        Pong, Adivina el Pokémon, Ahorcado y muchos más.
+      </p>
 
       <button>
         <router-link to="/juegos">Explorar más juegos</router-link>
@@ -44,8 +47,12 @@ export default {
   name: 'Inicio',
 
   mounted() {
-    logEvent(analytics, 'test_event');
-    console.log("evento enviado");
+    logEvent(analytics, 'home_page_view', {
+      page_name: 'Inicio',
+      section: 'principal'
+    });
+
+    console.log('Visita a la página principal registrada');
   }
 };
 </script>

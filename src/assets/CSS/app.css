@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -7,7 +9,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
+  background: #0a0e17;
+  color: #c9d1d9;
 }
 
 body {
@@ -23,8 +27,10 @@ body {
 nav {
   position: relative;
   z-index: 20;
-  background-color: #000;
+  background: linear-gradient(180deg, #0f1923 0%, #141e30 100%);
+  border-bottom: 1px solid #1e3a5f;
   padding: 10px clamp(12px, 3vw, 28px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .nav-header {
@@ -47,16 +53,22 @@ footer img {
   height: auto;
   aspect-ratio: 9 / 4;
   object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(126, 232, 250, 0.3));
 }
 
 .nav-toggle {
   display: none;
   background: transparent;
   border: none;
-  color: #ecf0f1;
+  color: #7ee8fa;
   font-size: 24px;
   cursor: pointer;
   padding: 10px;
+  transition: color 0.3s;
+}
+
+.nav-toggle:hover {
+  color: #fff;
 }
 
 .nav-links {
@@ -80,23 +92,27 @@ footer img {
   align-items: center;
   justify-content: center;
   min-height: 42px;
-  color: #ecf0f1;
+  color: #c9d1d9;
   background: transparent;
   border: 0;
-  border-radius: 5px;
+  border-radius: 6px;
   text-decoration: none;
   padding: 10px 12px;
-  font: inherit;
-  font-size: clamp(14px, 1.4vw, 18px);
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(12px, 1.2vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease;
   white-space: nowrap;
 }
 
 .nav-links a:hover,
 .nav-links button:hover {
-  background-color: #34495e;
-  color: #fff;
+  background: rgba(126, 232, 250, 0.12);
+  color: #7ee8fa;
+  text-shadow: 0 0 10px rgba(126, 232, 250, 0.5);
 }
 
 .content {
@@ -106,15 +122,16 @@ footer img {
 }
 
 footer {
-  background-color: #000;
-  color: #ecf0f1;
+  background: linear-gradient(180deg, #141e30 0%, #0a0e17 100%);
+  color: #c9d1d9;
   text-align: center;
   padding: clamp(18px, 3vw, 28px);
+  border-top: 1px solid #1e3a5f;
 }
 
 footer h2,
 footer i:hover {
-  color: #dae791;
+  color: #7ee8fa;
 }
 
 .footer-content {
@@ -133,7 +150,10 @@ footer i:hover {
 
 .footer-section h2 {
   margin-top: 0;
-  font-size: 18px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .footer-section ul {
@@ -147,12 +167,13 @@ footer i:hover {
 }
 
 .footer-section a {
-  color: #ecf0f1;
+  color: #c9d1d9;
   text-decoration: none;
+  transition: color 0.3s;
 }
 
 .footer-section a:hover {
-  color: #dee8a6;
+  color: #7ee8fa;
 }
 
 .contact-info {
@@ -170,16 +191,19 @@ footer i:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #ecf0f1;
+  color: #c9d1d9;
   font-size: 20px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #2a3a50;
 }
 
 .social-icons a:hover {
-  background-color: #34495e;
+  background-color: rgba(126, 232, 250, 0.15);
+  border-color: #7ee8fa;
+  color: #7ee8fa;
 }
 
 footer form {
@@ -192,19 +216,35 @@ footer form button {
   width: 100%;
   min-width: 0;
   padding: 10px;
-  border: 1px solid #34495e;
-  border-radius: 5px;
+  border: 1px solid #2a3a50;
+  border-radius: 6px;
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+footer form input::placeholder {
+  color: #555;
+}
+
+footer form input:focus {
+  border-color: #7ee8fa;
+  outline: none;
 }
 
 footer form button {
-  background-color: #175b9f;
-  color: #ecf0f1;
+  background: #7ee8fa;
+  color: #0a0e17;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 footer form button:hover {
-  background-color: #0a3764;
-  color: #fff;
+  background: #5cc8e0;
+  box-shadow: 0 0 15px rgba(126, 232, 250, 0.4);
 }
 
 @media screen and (max-width: 900px) {
@@ -261,9 +301,10 @@ footer form button:hover {
     gap: 0;
     max-height: 0;
     overflow: hidden;
-    background-color: #000;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #0f1923;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     transition: max-height 0.35s ease;
+    border-bottom: 1px solid #1e3a5f;
   }
 
   .nav-links.nav-active {
@@ -274,7 +315,7 @@ footer form button:hover {
     display: flex;
     justify-content: center;
     width: min(100%, 360px);
-    border-bottom: 1px solid #34495e;
+    border-bottom: 1px solid #1e3a5f;
   }
 
   .nav-links li:last-child {
@@ -285,7 +326,7 @@ footer form button:hover {
   .nav-links button {
     width: 100%;
     min-height: 48px;
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
   }
 }

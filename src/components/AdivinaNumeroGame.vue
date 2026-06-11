@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -71,25 +70,11 @@ export default {
       this.saveScore();
     },
     async saveScore() {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const userName = this.getUserName(user.email);
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: userName,
-            puntos: this.score,
-            fecha: serverTimestamp(),
-            juego: 'Adivina el Número'
-          });
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
+      try {
+        await saveGameScore('Adivina el Número', this.score);
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
-    },
-    getUserName(email) {
-      const atIndex = email.indexOf('@');
-      return atIndex !== -1 ? email.slice(0, atIndex) : 'Anónimo';
     },
     disableNumbers() {
       if (this.guess < this.numberToGuess) {

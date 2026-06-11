@@ -12,12 +12,12 @@ const firebaseConfig = {
   storageBucket: "proyectodampablo.firebasestorage.app",
   messagingSenderId: "187719158200",
   appId: "1:187719158200:web:ccd7b61efb34a832d0674d",
-  measurementId: "G-FHLE4J94JY"
+  measurementId: "G-F4J1CMNJG0"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
 
-/* 👇 ACTIVAR ANALYTICS */
+
 const analytics = getAnalytics(firebaseApp);
 
 const auth = getAuth(firebaseApp);

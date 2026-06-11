@@ -29,8 +29,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   name: 'GuessColorGame',
@@ -52,7 +51,6 @@ export default {
   mounted() {
     this.generateRandomColor();
     this.startTimer();
-    this.getUserName();
   },
   beforeUnmount() {
     clearInterval(this.timer);
@@ -139,19 +137,11 @@ export default {
       return points;
     },
     async calculateScoreAndSave() {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: this.userName,
-            puntos: this.correctGuesses >= 15 ? this.calculatePoints() : 0,
-            fecha: serverTimestamp(),
-            juego: 'Adivina el Color'
-          });
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
+      try {
+        const puntos = this.correctGuesses >= 15 ? this.calculatePoints() : 0;
+        await saveGameScore('Adivina el Color', puntos);
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
     },
     restartGame() {
@@ -163,13 +153,6 @@ export default {
       this.gameOver = false;
       this.generateRandomColor();
       this.startTimer();
-    },
-    getUserName() {
-      const user = auth.currentUser;
-      if (user) {
-        const atIndex = user.email.indexOf('@');
-        this.userName = atIndex !== -1 ? user.email.slice(0, atIndex) : 'Anónimo';
-      }
     },
   },
 };

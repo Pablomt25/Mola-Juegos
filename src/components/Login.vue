@@ -65,7 +65,7 @@
 
 <script>
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 
 export default {
   data() {
@@ -90,8 +90,11 @@ export default {
           const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
           const user = userCredential.user;
           await setDoc(doc(db, "usuarios", user.uid), {
-            Id: user.uid,
-            NombreDeUsuario: this.username
+            nombre: this.username,
+            email: user.email,
+            foto: user.photoURL || '',
+            fechaRegistro: serverTimestamp(),
+            ultimaConexion: serverTimestamp(),
           });
           this.redirectToOriginalPage();
         } catch (error) {
@@ -101,8 +104,13 @@ export default {
     },
     async signInWithEmailAndPassword() {
       const auth = getAuth();
+      const db = getFirestore();
       try {
         const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
+        await updateDoc(doc(db, "usuarios", user.uid), {
+          ultimaConexion: serverTimestamp(),
+        }).catch(() => {});
         this.redirectToOriginalPage();
       } catch (error) {
         this.errorMessage = error.message;
@@ -110,9 +118,28 @@ export default {
     },
     async signInWithGoogle() {
       const auth = getAuth();
+      const db = getFirestore();
       const provider = new GoogleAuthProvider();
       try {
         const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userRef = doc(db, "usuarios", user.uid);
+        const existing = await getDoc(userRef);
+        if (!existing.exists()) {
+          await setDoc(userRef, {
+            nombre: user.displayName || user.email.split('@')[0],
+            email: user.email,
+            foto: user.photoURL || '',
+            fechaRegistro: serverTimestamp(),
+            ultimaConexion: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(userRef, {
+            nombre: user.displayName || user.email.split('@')[0],
+            foto: user.photoURL || '',
+            ultimaConexion: serverTimestamp(),
+          });
+        }
         this.redirectToOriginalPage();
       } catch (error) {
         this.errorMessage = error.message;
@@ -120,9 +147,28 @@ export default {
     },
     async signInWithFacebook() {
       const auth = getAuth();
+      const db = getFirestore();
       const provider = new FacebookAuthProvider();
       try {
         const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userRef = doc(db, "usuarios", user.uid);
+        const existing = await getDoc(userRef);
+        if (!existing.exists()) {
+          await setDoc(userRef, {
+            nombre: user.displayName || user.email.split('@')[0],
+            email: user.email || '',
+            foto: user.photoURL || '',
+            fechaRegistro: serverTimestamp(),
+            ultimaConexion: serverTimestamp(),
+          });
+        } else {
+          await updateDoc(userRef, {
+            nombre: user.displayName || user.email.split('@')[0],
+            foto: user.photoURL || '',
+            ultimaConexion: serverTimestamp(),
+          });
+        }
         this.redirectToOriginalPage();
       } catch (error) {
         this.errorMessage = error.message;
@@ -153,7 +199,7 @@ export default {
       return params.get('redirectTo');
     },
     redirectToOriginalPage() {
-      window.location.href = this.redirectTo;
+      this.$router.push(this.redirectTo || '/');
     }
   }
 };

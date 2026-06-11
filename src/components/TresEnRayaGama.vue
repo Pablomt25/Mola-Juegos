@@ -6,6 +6,12 @@
         :class="{ selected: difficulty === level }">
         {{ capitalize(level) }}
       </button>
+      <button @click="setDifficulty('2 Jugadores')" :class="{ selected: difficulty === '2 Jugadores' }">
+        2 Jugadores
+      </button>
+    </div>
+    <div v-if="difficulty === '2 Jugadores'" class="turn-indicator">
+      <p>Turno de: <strong>{{ currentPlayer }}</strong></p>
     </div>
     <div class="board">
       <div v-for="(cell, index) in board" :key="index" class="cell" @click="makeMove(index)">
@@ -20,8 +26,7 @@
 </template>
 
 <script>
-import { db, auth } from '../firebase';
-import { addDoc, collection, serverTimestamp, getDoc, doc } from 'firebase/firestore';
+import { saveGameScore } from '../utils/ranking';
 
 export default {
   data() {
@@ -46,9 +51,13 @@ export default {
       if (this.board[index] === '' && !this.gameOver) {
         this.board.splice(index, 1, this.currentPlayer);
         if (this.checkWin(this.currentPlayer)) {
-          this.gameOverMessage = `${this.currentPlayer} gana!`;
+          if (this.difficulty === '2 Jugadores') {
+            this.gameOverMessage = `${this.currentPlayer} gana!`;
+          } else {
+            this.gameOverMessage = `${this.currentPlayer} gana!`;
+          }
           this.gameOver = true;
-          if (this.currentPlayer === 'X') {
+          if (this.currentPlayer === 'X' || this.difficulty === '2 Jugadores') {
             await this.calculateScoreAndSave();
           }
         } else if (this.board.every(cell => cell !== '')) {
@@ -56,7 +65,7 @@ export default {
           this.gameOver = true;
         } else {
           this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
-          if (this.currentPlayer === 'O') {
+          if (this.difficulty !== '2 Jugadores' && this.currentPlayer === 'O') {
             this.computerMove();
           }
         }
@@ -143,9 +152,9 @@ export default {
     },
     checkWinner(board) {
       const winPatterns = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-        [0, 4, 8], [2, 4, 6],         
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6],
       ];
       for (const pattern of winPatterns) {
         const [a, b, c] = pattern;
@@ -161,8 +170,8 @@ export default {
     checkWin(player) {
       const winPatterns = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-        [0, 4, 8], [2, 4, 6],          
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6],
       ];
       return winPatterns.some(pattern =>
         pattern.every(index => this.board[index] === player)
@@ -170,33 +179,27 @@ export default {
     },
     async calculateScoreAndSave() {
       let score;
-      switch (this.difficulty) {
-        case 'Fácil':
-          score = 1;
-          break;
-        case 'Medio':
-          score = 3;
-          break;
-        case 'Imposible':
-          score = 30;
-          break;
+      if (this.difficulty === '2 Jugadores') {
+        score = this.gameOverMessage.includes('Empate') ? 0 : 5;
+      } else {
+        switch (this.difficulty) {
+          case 'Fácil':
+            score = 1;
+            break;
+          case 'Medio':
+            score = 3;
+            break;
+          case 'Imposible':
+            score = 30;
+            break;
+        }
       }
 
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          let userName = user.email.split('@')[0]; 
-
-          await addDoc(collection(db, 'ranking'), {
-            userId: user.uid,
-            nombre: userName,
-            puntos: score,
-            fecha: serverTimestamp(),
-            juego: '3 en Raya'
-          });
-        } catch (error) {
-          console.error("Error al guardar la puntuación: ", error);
-        }
+      try {
+        const won = this.gameOverMessage.includes('X gana') || this.gameOverMessage.includes('gana!');
+        await saveGameScore('3 en Raya', score, { wonTresEnRaya: won });
+      } catch (error) {
+        console.error("Error al guardar la puntuación: ", error);
       }
     },
     resetGame() {
@@ -208,8 +211,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style scoped>
 .tic-tac-toe {
@@ -240,6 +241,16 @@ export default {
 .difficulty-buttons button.selected {
   background-color: #0d61a5;
   color: white;
+}
+
+.turn-indicator {
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #c9d1d9;
+}
+
+.turn-indicator strong {
+  color: #7ee8fa;
 }
 
 .board {
@@ -288,10 +299,8 @@ export default {
 }
 
 @media screen and (max-width: 480px) {
-
-  h1{
+  h1 {
     margin-top: 30px;
   }
-
 }
 </style>

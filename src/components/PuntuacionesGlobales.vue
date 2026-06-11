@@ -24,7 +24,7 @@
 
 <script>
 import { db } from '../firebase';
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 import pongImage from '../assets/pong.avif';
 import guessTheColorImage from '../assets/guess-the-color.webp';
@@ -74,52 +74,30 @@ export default {
   },
   methods: {
     async getPuntuacionesGlobales() {
-      const q = query(collection(db, 'ranking'), orderBy('puntos', 'desc'));
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(collection(db, 'ranking'));
       const puntuacionesMap = new Map();
 
       querySnapshot.forEach(doc => {
         const data = doc.data();
+        if (!data.juego) return;
+
         if (!puntuacionesMap.has(data.juego)) {
           puntuacionesMap.set(data.juego, []);
         }
         puntuacionesMap.get(data.juego).push({
           nombre: data.nombre,
-          puntos: data.puntos,
+          puntos: this.mostrarMejorPuntuacion ? (data.puntos || 0) : (data.totalPuntos || 0),
         });
       });
 
-      const mejoresPuntuaciones = this.getMejoresPuntuaciones(puntuacionesMap);
-
-      const puntuacionesTotales = Array.from(puntuacionesMap.entries()).map(([juego, usuarios]) => {
-        const puntosPorUsuario = usuarios.reduce((acc, curr) => {
-          if (!acc[curr.nombre]) {
-            acc[curr.nombre] = 0;
-          }
-          acc[curr.nombre] += curr.puntos;
-          return acc;
-        }, {});
-
-        const topUsuarios = Object.entries(puntosPorUsuario)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 3)
-          .map(([nombre, puntos]) => ({ nombre, puntos }));
+      this.puntuaciones = Array.from(puntuacionesMap.entries()).map(([juego, usuarios]) => {
+        const topUsuarios = usuarios
+          .sort((a, b) => b.puntos - a.puntos)
+          .slice(0, 3);
 
         return {
           juego,
           usuarios: topUsuarios,
-          juegoImagen: this.gameImages[juego],
-        };
-      });
-
-      this.puntuaciones = this.mostrarMejorPuntuacion ? mejoresPuntuaciones : puntuacionesTotales;
-    },
-    getMejoresPuntuaciones(puntuacionesMap) {
-      return Array.from(puntuacionesMap.entries()).map(([juego, usuarios]) => {
-        return {
-          juego,
-          usuarios: usuarios.slice(0, 3), 
-          juegoImagen: this.gameImages[juego],
         };
       });
     },
